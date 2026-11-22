@@ -132,24 +132,23 @@ td .btn{min-height:38px;padding:4px 12px;font-size:14px}
 .toast{position:fixed;z-index:30;bottom:calc(96px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#10253d;color:#fff;padding:12px 20px;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.3);max-width:90vw;opacity:0;pointer-events:none;transition:opacity .25s}
 .toast.on{opacity:1}
 .kbar,.kside{display:none}
-body.kiosk{padding:0;background:var(--bg)}
+body.kiosk{padding:0;background:var(--bg);height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column}
 body.kiosk .top,body.kiosk .tools,body.kiosk .side,body.kiosk .note,body.kiosk #addBtn,body.kiosk .banner{display:none!important}
-body.kiosk .kbar{display:flex;align-items:center;gap:20px;padding:12px 20px;flex-wrap:wrap}
-.kbar img{height:64px}.kbar h1{flex:1;font-size:clamp(26px,3.2vw,46px)}
-.kbar .live{display:flex;gap:22px}.kbar .live b{font-size:clamp(24px,2.6vw,40px);display:block;line-height:1}.kbar .live span{color:var(--soft);font-size:14px}
-.kbar .ctl{display:flex;gap:8px;opacity:.55}.kbar .ctl:hover{opacity:1}.kbar .ctl .btn{min-height:40px;font-size:14px;padding:4px 14px}
-body.kiosk .wrap{max-width:none;padding:0 20px 20px}
-body.kiosk #v-bubbles{grid-template-columns:minmax(0,1fr)}
-body.kiosk .stage{height:calc(100vh - 112px);min-height:420px}
-body.kiosk .kside{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;background:#fff;color:#10253d;border-radius:28px;padding:24px;align-self:stretch}
-.kside h2{font:700 30px/1.15 "Reem Kufi",Tajawal;margin:0}.kside p{margin:0;color:#3f546b}
-.qr{background:#fff;padding:12px;border-radius:18px;border:3px solid #477ab3;width:100%;max-width:260px;aspect-ratio:1;display:grid;place-items:center}
+body.kiosk .kbar{display:flex;align-items:center;gap:16px;padding:8px 16px;flex:none;height:64px}
+.kbar img{height:44px}.kbar h1{flex:1;font-size:clamp(20px,2.6vw,38px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.kbar .live{display:flex;gap:18px}.kbar .live b{font-size:clamp(18px,2vw,30px);display:block;line-height:1}.kbar .live span{color:var(--soft);font-size:12px}
+.kbar .ctl{display:flex;gap:6px;opacity:.5}.kbar .ctl:hover{opacity:1}.kbar .ctl .btn{min-height:34px;font-size:13px;padding:2px 12px}
+body.kiosk main.wrap{flex:1;min-height:0;max-width:none;width:100%;padding:0 12px 12px}
+body.kiosk #v-bubbles{height:100%;grid-template-columns:minmax(0,1fr) clamp(130px,16vw,230px);gap:12px}
+body.kiosk #v-bubbles>div:first-child{height:100%;min-height:0}
+body.kiosk .stage{height:100%;min-height:0;border-radius:22px}
+body.kiosk .kside{display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px;background:#fff;color:#10253d;border-radius:22px;padding:14px 12px;min-height:0;overflow:hidden}
+.kside h2{font:700 clamp(17px,1.7vw,26px)/1.2 "Reem Kufi",Tajawal;margin:0}.kside p{margin:0;color:#3f546b;font-size:clamp(12px,1vw,15px);line-height:1.4}
+.qr{background:#fff;padding:6px;border-radius:12px;border:3px solid #477ab3;width:100%;aspect-ratio:1;display:grid;place-items:center;font-size:13px}
 .qr img,.qr canvas{width:100%!important;height:auto!important;display:block}
-.klink{font-weight:800;direction:ltr;word-break:break-all;font-size:14px;color:#2f64a0}
-.ktop{list-style:none;margin:8px 0 0;padding:0;width:100%;text-align:start;border-top:2px solid #e3eaf2}
-.ktop li{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #eef2f7;font-weight:700}.ktop li i{width:14px;height:14px;border-radius:50%;background:var(--c);flex:none}.ktop li span{flex:1}
-@media(min-width:900px){body.kiosk #v-bubbles{grid-template-columns:minmax(0,1fr) 320px}}
-@media(max-width:899px){body.kiosk .stage{height:68vh}}
+.klink{font-weight:700;direction:ltr;word-break:break-all;font-size:11px;color:#2f64a0;line-height:1.3}
+.ktop{display:none}
+@media(max-width:600px){.kbar .live,.kbar img{display:none}}
 .links{display:grid;gap:10px}.links div{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--field);border-radius:14px;padding:10px 14px}.links code{flex:1;direction:ltr;text-align:left;font-size:14px}
 pre.rep{white-space:pre-wrap;background:var(--field);padding:12px;border-radius:12px;font:14px/1.6 Tajawal}
 @media(max-width:600px){
