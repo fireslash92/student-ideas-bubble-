@@ -131,6 +131,26 @@ td select{min-height:40px;border-radius:10px;padding:4px 8px;font-size:15px}
 td .btn{min-height:38px;padding:4px 12px;font-size:14px}
 .toast{position:fixed;z-index:30;bottom:calc(96px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#10253d;color:#fff;padding:12px 20px;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.3);max-width:90vw;opacity:0;pointer-events:none;transition:opacity .25s}
 .toast.on{opacity:1}
+.kbar,.kside{display:none}
+body.kiosk{padding:0;background:var(--bg)}
+body.kiosk .top,body.kiosk .tools,body.kiosk .side,body.kiosk .note,body.kiosk #addBtn,body.kiosk .banner{display:none!important}
+body.kiosk .kbar{display:flex;align-items:center;gap:20px;padding:12px 20px;flex-wrap:wrap}
+.kbar img{height:64px}.kbar h1{flex:1;font-size:clamp(26px,3.2vw,46px)}
+.kbar .live{display:flex;gap:22px}.kbar .live b{font-size:clamp(24px,2.6vw,40px);display:block;line-height:1}.kbar .live span{color:var(--soft);font-size:14px}
+.kbar .ctl{display:flex;gap:8px;opacity:.55}.kbar .ctl:hover{opacity:1}.kbar .ctl .btn{min-height:40px;font-size:14px;padding:4px 14px}
+body.kiosk .wrap{max-width:none;padding:0 20px 20px}
+body.kiosk #v-bubbles{grid-template-columns:minmax(0,1fr)}
+body.kiosk .stage{height:calc(100vh - 112px);min-height:420px}
+body.kiosk .kside{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px;background:#fff;color:#10253d;border-radius:28px;padding:24px;align-self:stretch}
+.kside h2{font:700 30px/1.15 "Reem Kufi",Tajawal;margin:0}.kside p{margin:0;color:#3f546b}
+.qr{background:#fff;padding:12px;border-radius:18px;border:3px solid #477ab3;width:100%;max-width:260px;aspect-ratio:1;display:grid;place-items:center}
+.qr img,.qr canvas{width:100%!important;height:auto!important;display:block}
+.klink{font-weight:800;direction:ltr;word-break:break-all;font-size:14px;color:#2f64a0}
+.ktop{list-style:none;margin:8px 0 0;padding:0;width:100%;text-align:start;border-top:2px solid #e3eaf2}
+.ktop li{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #eef2f7;font-weight:700}.ktop li i{width:14px;height:14px;border-radius:50%;background:var(--c);flex:none}.ktop li span{flex:1}
+@media(min-width:900px){body.kiosk #v-bubbles{grid-template-columns:minmax(0,1fr) 320px}}
+@media(max-width:899px){body.kiosk .stage{height:68vh}}
+.links{display:grid;gap:10px}.links div{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--field);border-radius:14px;padding:10px 14px}.links code{flex:1;direction:ltr;text-align:left;font-size:14px}
 pre.rep{white-space:pre-wrap;background:var(--field);padding:12px;border-radius:12px;font:14px/1.6 Tajawal}
 @media(max-width:600px){
  .logo{height:52px}.topin{gap:12px}
@@ -150,6 +170,9 @@ pre.rep{white-space:pre-wrap;background:var(--field);padding:12px;border-radius:
 </div>
 <div class="banner" id="banner" hidden></div>
 </header>
+<div class="kbar"><img src="logo-wide.jpg" alt="IT Club"><h1>فقاعة أفكار الطلاب</h1>
+  <div class="live" id="klive"></div>
+  <div class="ctl"><button class="btn" data-a="fs">ملء الشاشة</button><a class="btn" href="#">خروج</a></div></div>
 <nav class="tools">
   <div class="tabs" role="tablist">
     <button role="tab" data-v="bubbles" aria-selected="true">الفقاعات</button>
@@ -157,6 +180,7 @@ pre.rep{white-space:pre-wrap;background:var(--field);padding:12px;border-radius:
     <button role="tab" data-v="admin" aria-selected="false" id="admTab" hidden>لوحة الإشراف</button>
   </div>
   <div class="search"><input id="q" type="search" placeholder="ابحث عن فكرة…" aria-label="البحث عن الأفكار"></div>
+  <a class="btn" href="#display">شاشة العرض</a>
   <div class="chips" id="chips"></div>
 </nav>
 <main class="wrap">
@@ -165,6 +189,7 @@ pre.rep{white-space:pre-wrap;background:var(--field);padding:12px;border-radius:
       <div class="stage" id="stage"><div class="empty" id="empty" hidden></div></div>
       <p class="note">حجم الفقاعة يعكس مستوى التأييد، وليس بالضرورة قابلية تنفيذ الفكرة أو أولوية اعتمادها. اضغط على أي فقاعة لعرض تفاصيلها وتأييدها.</p>
     </div>
+    <aside class="kside"><h2>شارك بفكرتك</h2><p>امسح الرمز بهاتفك النقال وأطلق فقاعتك</p><div class="qr" id="qr"></div><div class="klink" id="klink"></div><ol class="ktop" id="ktop"></ol></aside>
     <aside class="side"><h2>الأكثر تأييدًا</h2><ol class="rank" id="top"></ol><div class="stats" id="stats"></div></aside>
   </section>
   <section id="v-list" hidden>
@@ -178,9 +203,11 @@ pre.rep{white-space:pre-wrap;background:var(--field);padding:12px;border-radius:
 <div class="sheet panel" id="sheet" role="dialog" aria-modal="true" hidden><button class="x" id="x" aria-label="إغلاق">×</button><div id="sb"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script>
 {
 const CATS=[{k:'study',n:'الدراسة والتعلم',c:'#ffd166'},{k:'facil',n:'المرافق والترفيه',c:'#7fe3c4'},{k:'digital',n:'الخدمات الرقمية',c:'#c9b8ff'},{k:'innov',n:'الابتكار وريادة الأعمال',c:'#ffa883'},{k:'act',n:'الأنشطة الثقافية والرياضية',c:'#ff9cc4'},{k:'other',n:'أخرى',c:'#e8eef6'}];
+const LINK='https://claude.ai/artifact/Xg6QvsrNLe1zMAEHnafs7N',ADD=LINK+'#add',SHOW=LINK+'#display';
 const CM=Object.fromEntries(CATS.map(c=>[c.k,c]));
 const ST={new:'جديدة',review:'قيد الدراسة',approved:'معتمدة',done:'منفذة'};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -251,7 +278,7 @@ const stage=$('#stage'),nodes=new Map();
 function sizeFor(list){
   const W=stage.clientWidth,H=stage.clientHeight;
   const maxV=Math.max(5,...list.map(i=>i.votes));
-  const minR=Math.max(32,Math.min(48,W*.075)),maxR=Math.max(62,Math.min(125,Math.min(W,H)*.21));
+  const minR=Math.max(32,Math.min(48,W*.075)),maxR=Math.max(62,Math.min(document.body.classList.contains('kiosk')?175:125,Math.min(W,H)*.21));
   const r=list.map(i=>minR+(maxR-minR)*Math.sqrt(i.votes/maxV));
   const area=r.reduce((a,x)=>a+Math.PI*x*x,0),cap=.52*W*H;
   const s=area>cap?Math.sqrt(cap/area):1;return r.map(x=>Math.max(24,x*s));
@@ -327,6 +354,9 @@ function renderAdmin(){
   const bySt=Object.entries(ST).map(([k,n])=>({k,n,c:v.filter(i=>i.status===k).length})),ms=Math.max(1,...bySt.map(x=>x.c));
   const rows=[...D.all].sort((a,b)=>b.votes-a.votes);
   $('#v-admin').innerHTML=`
+  <div class="sec"><h2>روابط المنصة</h2><div class="links">
+   <div><strong>رابط مشاركة الأفكار (للطلبة)</strong><code>${ADD}</code><button class="btn" data-copy="${ADD}">نسخ</button></div>
+   <div><strong>شاشة العرض (للتلفاز أو جهاز العرض)</strong><code>${SHOW}</code><button class="btn" data-copy="${SHOW}">نسخ</button><a class="btn primary" href="#display">فتح</a></div></div></div>
   <div class="sec"><h2>نظرة عامة</h2><div class="kpis"><div><b>${v.length}</b><span>فكرة معروضة</span></div><div><b>${tot}</b><span>إجمالي التأييدات</span></div><div><b>${participants()}</b><span>طالب مشارك</span></div><div><b>${v.filter(i=>i.status==='review').length}</b><span>قيد الدراسة</span></div></div></div>
   <div class="two">
    <div class="sec"><h2>التأييد حسب المجال</h2>${byCat.map(x=>`<div class="hrow" style="--c:${x.c.c}"><span>${x.c.n}</span><div class="bar"><span style="width:${x.s/mc*100}%"></span></div><span class="num">${x.s} · ${x.n} فكرة</span></div>`).join('')}</div>
@@ -384,12 +414,36 @@ function submitAdd(e){
   closeSheet();setView('bubbles');U.cat='all';U.q='';$('#q').value='';render();toast('أُطلقت فقاعتك! شارك الرابط ليؤيدها زملاؤك.');
 }
 
+/* ---------- display screen ---------- */
+const known=new Set();let qrDone=false;
+function renderKiosk(){
+  const on=document.body.classList.contains('kiosk');
+  D.vis.forEach(i=>{if(!known.has(i.k)){if(on&&S.loaded&&known.size)toast('فقاعة جديدة: '+i.title);known.add(i.k)}});
+  if(!on)return;
+  const v=D.vis;$('#klive').innerHTML=`<div><b>${v.length}</b><span>فكرة</span></div><div><b>${v.reduce((a,i)=>a+i.votes,0)}</b><span>تأييد</span></div><div><b>${participants()}</b><span>مشارك</span></div>`;
+  $('#ktop').innerHTML=[...v].sort((a,b)=>b.votes-a.votes).slice(0,3).map(i=>`<li style="--c:${CM[i.cat].c}"><i></i><span>${esc(i.title)}</span><b>${i.votes}</b></li>`).join('');
+}
+function drawQR(){
+  if(qrDone)return;$('#klink').textContent=ADD.replace('https://','');
+  if(typeof QRCode==='function'){try{new QRCode($('#qr'),{text:ADD,width:512,height:512,colorDark:'#10253d',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});qrDone=true}catch(e){}}
+  if(!qrDone)$('#qr').innerHTML='<p>افتح الرابط أدناه</p>';
+}
+function route(){
+  const h=location.hash.slice(1);
+  document.body.classList.toggle('kiosk',h==='display');
+  if(h==='display'){closeSheet();setView('bubbles');drawQR()}
+  else render();
+  if(h==='add'&&U.sheet!=='add')openSheet('add');
+}
+addEventListener('hashchange',route);
+
 /* ---------- render + events ---------- */
 function render(){
   derive();renderChips();renderStage();renderSide();
   if(U.view==='list')renderList();
   if(U.view==='admin')renderAdmin();
   $('#admTab').hidden=!S.admin;
+  renderKiosk();
   if(U.sheet==='detail'&&!$('#sheet').contains(document.activeElement)||U.sheet==='detail'&&document.activeElement===$('#x'))drawDetail();
   const b=$('#banner');
   if(S.demo){b.hidden=false;b.innerHTML=`<span>معاينة بأمثلة توضيحية — المشاركات في هذا الوضع لا تُحفظ.</span>${S.live?'<button class="btn" data-a="exitdemo">العودة إلى المنصة</button>':''}`}
@@ -414,6 +468,8 @@ document.addEventListener('click',e=>{
   if(a==='exitdemo'){S.demo=false;Object.assign(S,real);S.me=real.me;S.admin=real.admin;nodes.forEach(n=>n.el.remove());nodes.clear();setView(U.view)}
   if(a==='copy'){const txt=report();navigator.clipboard?.writeText(txt).then(()=>toast('نُسخ التقرير.'),()=>{getSelection().selectAllChildren($('#rep'));toast('حدّد النص وانسخه يدويًا.')})}
   if(a==='sup')toggleSupport(U.k);
+  if(a==='fs'){const r=document.documentElement.requestFullscreen?.();r?r.catch(()=>toast('اضغط F11 لملء الشاشة')):toast('اضغط F11 لملء الشاشة')}
+  const cp=t.closest('[data-copy]');if(cp)navigator.clipboard?.writeText(cp.dataset.copy).then(()=>toast('نُسخ الرابط.'),()=>toast('انسخ الرابط يدويًا.'));
   if(a==='hide'){setMeta(U.k,{hidden:!D.byK[U.k].hidden});toast('تم التحديث.')}
   if(a==='merge'){const to=$('#dMg').value;if(!to)return toast('اختر فكرة للدمج معها.');setMeta(U.k,{into:to});toast('دُمجت الفكرة، وانتقلت تأييداتها.');U.k=to;drawDetail()}
   if(a==='del'){const it=(S.posts[S.me]?.items||[]).filter(x=>x.k!==U.k);write('posts/'+S.me,{items:it});closeSheet();toast('حُذفت فكرتك.')}
@@ -455,7 +511,7 @@ function enterDemo(){
 }
 
 /* ---------- boot ---------- */
-requestAnimationFrame(step);render();
+requestAnimationFrame(step);route();
 (async()=>{
   const C=window.claude;
   const [db,user]=C?await Promise.all([C.use('db'),C.use('user')]):[null,null];
