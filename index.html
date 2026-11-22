@@ -63,8 +63,13 @@ background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.75) 0,rgba(255,25
 .bub.sm .s{display:none}
 .bub.me{outline:3px solid var(--acc);outline-offset:3px}
 .bub.pop{animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
+.bub.lead{box-shadow:0 0 0 7px rgba(255,209,102,.38),0 0 40px rgba(255,209,102,.45),0 14px 34px rgba(8,25,50,.35)}
+.bub.grow::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:3px solid #fff;animation:ring .95s ease-out forwards;pointer-events:none}
+@keyframes ring{from{opacity:.95;transform:scale(1)}to{opacity:0;transform:scale(1.5)}}
+.plus{position:absolute;z-index:3;direction:ltr;pointer-events:none;font:800 24px/1 Tajawal,sans-serif;color:#fff;text-shadow:0 2px 10px rgba(6,20,40,.5);transform:translate(-50%,-50%);animation:plus 1.25s ease-out forwards}
+@keyframes plus{0%{opacity:0;margin-top:0}15%{opacity:1}100%{opacity:0;margin-top:-56px}}
 @keyframes pop{from{opacity:0}to{opacity:1}}
-@media(prefers-reduced-motion:reduce){.bub.pop{animation:none}.bub .in{transition:none}}
+@media(prefers-reduced-motion:reduce){.bub.pop{animation:none}.bub.grow::after,.plus{display:none}.bub .in{transition:none}}
 .empty{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;text-align:center;gap:12px;padding:24px}
 .empty h2{font:700 26px/1.2 "Reem Kufi",Tajawal;margin:0}
 .empty p{margin:0;color:var(--soft)}
@@ -281,14 +286,15 @@ function setMeta(k,patch){const m={...(S.meta[k]||{status:'new',hidden:false,int
 const stage=$('#stage'),nodes=new Map();
 function sizeFor(list){
   const W=stage.clientWidth,H=stage.clientHeight;
-  const maxV=Math.max(5,...list.map(i=>i.votes));
-  const minR=Math.max(32,Math.min(48,W*.075)),maxR=Math.max(62,Math.min(document.body.classList.contains('kiosk')?175:125,Math.min(W,H)*.21));
-  const r=list.map(i=>minR+(maxR-minR)*Math.sqrt(i.votes/maxV));
+  const maxV=Math.max(3,...list.map(i=>i.votes));
+  const minR=Math.max(28,Math.min(42,W*.06)),maxR=Math.max(62,Math.min(document.body.classList.contains('kiosk')?175:125,Math.min(W,H)*.21));
+  const r=list.map(i=>minR+(maxR-minR)*Math.pow(i.votes/maxV,.7));
   const area=r.reduce((a,x)=>a+Math.PI*x*x,0),cap=.52*W*H;
-  const s=area>cap?Math.sqrt(cap/area):1;return r.map(x=>Math.max(24,x*s));
+  const s=area>cap?Math.sqrt(cap/area):1;return r.map(x=>Math.max(22,x*s));
 }
 function renderStage(){
   const list=filtered(),W=stage.clientWidth,H=stage.clientHeight,rs=sizeFor(list),keep=new Set();
+  const lead=list.reduce((m,i)=>i.votes>(m?.votes||1)?i:m,null);
   list.forEach((i,ix)=>{
     keep.add(i.k);let n=nodes.get(i.k);
     if(!n){const el=document.createElement('button');el.className='bub'+(S.loaded?' pop':'');el.dataset.k=i.k;stage.appendChild(el);
@@ -299,6 +305,8 @@ function renderStage(){
       n.el.style.setProperty('--c',c.c);n.el.classList.toggle('me',i.sup);
       n.el.setAttribute('aria-label',i.title+'، '+supLabel(i.votes)+'، '+c.n);
       n.el.innerHTML=`<span class="in"><b>${esc(i.title)}</b><span class="v">${i.votes} ♥</span>${i.status!=='new'?`<span class="s">${ST[i.status]}</span>`:''}</span>`}
+    if(n.v!=null&&i.votes>n.v)pulse(n,i.votes-n.v);
+    n.v=i.votes;n.el.classList.toggle('lead',lead===i);
     n.el.classList.toggle('sm',n.tr<46);
   });
   for(const [k,n] of nodes)if(!keep.has(k)){n.el.remove();nodes.delete(k)}
@@ -308,10 +316,17 @@ function renderStage(){
   else if(!list.length){e.hidden=false;e.innerHTML='<p>لا توجد أفكار مطابقة للبحث أو المجال المختار.</p>'}
   else e.hidden=true;
 }
+function pulse(n,d){
+  if(RM)return;n.rv=(n.rv||0)+Math.min(14,4+d*3);
+  n.el.classList.remove('grow');void n.el.offsetWidth;n.el.classList.add('grow');
+  const p=document.createElement('span');p.className='plus';p.textContent='+'+d;
+  p.style.left=n.x+'px';p.style.top=(n.y-n.r)+'px';stage.appendChild(p);setTimeout(()=>p.remove(),1300);
+  setTimeout(()=>n.el.classList.remove('grow'),1000);
+}
 function step(t){
   if(U.view==='bubbles'&&nodes.size){
     const W=stage.clientWidth,H=stage.clientHeight,a=[...nodes.values()];
-    for(const n of a){n.r+=(n.tr-n.r)*.09;
+    for(const n of a){if(RM)n.r=n.tr;else{n.rv=(n.rv||0)*.84+(n.tr-n.r)*.05;n.r=Math.max(4,n.r+n.rv)}
       if(!RM){n.vx+=Math.sin(t/1800+n.ph)*.014;n.vy+=Math.cos(t/2300+n.ph*1.3)*.014}
       n.vx+=(W/2-n.x)*.00010;n.vy+=(H/2-n.y)*.00016}
     for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){const p=a[i],q=a[j];let dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||.01;const m=p.r+q.r+10;
