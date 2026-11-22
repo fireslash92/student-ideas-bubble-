@@ -63,6 +63,7 @@ a.btn{display:inline-flex;align-items:center;justify-content:center;text-decorat
 @media(min-width:960px){.grid{grid-template-columns:minmax(0,1fr) 310px}}
 .stage{position:relative;isolation:isolate;contain:layout paint;clip-path:inset(0 round 28px);-webkit-mask-image:-webkit-radial-gradient(white,black);height:clamp(320px,64vh,760px);height:clamp(320px,64dvh,760px);border-radius:28px;overflow:hidden;border:2px solid rgba(255,255,255,.55);
 background:radial-gradient(120% 90% at 50% 40%,rgba(255,255,255,.14),transparent 70%),repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 36px),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 36px),var(--bg);touch-action:pan-y}
+.world{position:absolute;left:0;top:0;transform-origin:0 0;z-index:1}
 .bub{position:absolute;left:0;top:0;border-radius:50%;padding:0;border:3px solid #fff;outline:1.5px solid rgba(255,255,255,.85);outline-offset:3px;cursor:pointer;color:#10253d;
 background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 38%),var(--c);box-shadow:0 10px 24px rgba(8,25,50,.28),inset 0 -8px 16px rgba(0,0,0,.08);will-change:transform;font-size:calc(var(--r,40) * .2px)}
 .bub .in{display:grid;place-content:center;justify-items:center;height:100%;padding:0 14%;text-align:center;gap:2px;transition:transform .2s}
@@ -85,6 +86,14 @@ background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.75) 0,rgba(255,25
 .pause{position:absolute;z-index:3;top:10px;inset-inline-end:10px;min-height:40px;padding:4px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,.85);background:rgba(16,37,61,.55);color:#fff;font-weight:700;font-size:14px;cursor:pointer;backdrop-filter:blur(4px)}
 .pause:hover{background:rgba(16,37,61,.75)}
 body.kiosk .pause{opacity:.55}body.kiosk .pause:focus-visible,body.kiosk .pause:hover{opacity:1}
+.zoom{position:absolute;z-index:3;bottom:10px;inset-inline-end:10px;display:flex;flex-direction:column;gap:6px;align-items:center}
+.zoom button{width:44px;height:44px;border-radius:50%;border:1.5px solid rgba(255,255,255,.85);background:rgba(16,37,61,.6);color:#fff;font:700 22px/1 Tajawal,sans-serif;cursor:pointer;backdrop-filter:blur(4px);display:grid;place-items:center}
+.zoom button[disabled]{opacity:.4;cursor:default}
+@media(hover:hover){.zoom button:not([disabled]):hover{background:rgba(16,37,61,.8)}}
+.zoom .lvl{font-size:12px;font-weight:700;background:rgba(16,37,61,.6);border-radius:99px;padding:2px 8px;direction:ltr}
+.zhint{position:absolute;z-index:3;bottom:12px;left:50%;transform:translateX(-50%);background:rgba(16,37,61,.75);color:#fff;font-size:14px;font-weight:700;padding:6px 14px;border-radius:99px;pointer-events:none;white-space:nowrap;max-width:calc(100% - 140px);overflow:hidden;text-overflow:ellipsis}
+body.kiosk .zoom,body.kiosk .zhint{display:none!important}
+.stage.grab{cursor:grab}.stage.grabbing{cursor:grabbing}
 .empty{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;text-align:center;gap:12px;padding:24px}
 .empty h2{font:700 26px/1.2 "Reem Kufi",Tajawal;margin:0}
 .empty p{margin:0;color:var(--soft)}
@@ -230,7 +239,7 @@ pre.rep{white-space:pre-wrap;background:var(--field);padding:12px;border-radius:
   <section id="v-bubbles" class="grid" role="tabpanel" aria-labelledby="t-bubbles">
     <div>
       <h2 class="sr">فقاعات الأفكار</h2>
-      <div class="stage" id="stage" role="region" aria-label="فقاعات الأفكار" aria-describedby="stageHelp"><button class="pause" id="pause" aria-pressed="false">إيقاف الحركة</button><div class="empty" id="empty" hidden></div><aside class="kside" id="kside" aria-label="شارك بفكرتك"><h2>شارك بفكرتك</h2><div class="qr" id="qr" role="img" aria-label="رمز QR يفتح نموذج إضافة فكرة"></div><p>امسح الرمز بهاتفك النقال</p><div class="klink" id="klink"></div><ol class="ktop" id="ktop"></ol></aside></div>
+      <div class="stage" id="stage" role="region" aria-label="فقاعات الأفكار" aria-describedby="stageHelp"><button class="pause" id="pause" aria-pressed="false">إيقاف الحركة</button><div class="world" id="world"></div><div class="zoom" role="group" aria-label="تكبير وتصغير الفقاعات"><button type="button" data-z="in" aria-label="تكبير" title="تكبير (+)">+</button><span class="lvl" id="zlvl" aria-hidden="true">100%</span><button type="button" data-z="out" aria-label="تصغير" title="تصغير (−)">−</button><button type="button" data-z="fit" aria-label="عرض كل الفقاعات" title="عرض الكل (0)">⤢</button></div><p class="zhint" id="zhint" hidden>قرّب بإصبعين أو بزر + لقراءة الأفكار</p><p class="sr" id="zst" aria-live="polite"></p><div class="empty" id="empty" hidden></div><aside class="kside" id="kside" aria-label="شارك بفكرتك"><h2>شارك بفكرتك</h2><div class="qr" id="qr" role="img" aria-label="رمز QR يفتح نموذج إضافة فكرة"></div><p>امسح الرمز بهاتفك النقال</p><div class="klink" id="klink"></div><ol class="ktop" id="ktop"></ol></aside></div>
       <p class="note" id="stageHelp">حجم الفقاعة يعكس مستوى التأييد، وليس بالضرورة قابلية تنفيذ الفكرة أو أولوية اعتمادها. اضغط على أي فقاعة لعرض تفاصيلها وتأييدها، أو استخدم «قائمة الأفكار» لعرضها مرتبة.</p>
     </div>
     <aside class="side" aria-labelledby="topH"><h2 id="topH">الأكثر تأييدًا</h2><ol class="rank" id="top"></ol><div class="stats" id="stats"></div></aside>
@@ -326,21 +335,29 @@ function setMeta(k,patch){const m={...(S.meta[k]||{status:'new',hidden:false,int
 
 /* ---------- bubbles ---------- */
 const stage=$('#stage'),nodes=new Map();
+const world=$('#world'),G={WW:300,WH:300},CAM={z:1,cx:150,cy:150,tz:1,tcx:150,tcy:150,fit:true};
+const isKiosk=()=>document.body.classList.contains('kiosk');
 function sizeFor(list){
-  const W=stage.clientWidth,H=stage.clientHeight;
+  const W=stage.clientWidth||300,H=stage.clientHeight||300;
   const maxV=Math.max(3,...list.map(i=>i.votes));
   const minR=Math.max(28,Math.min(42,W*.06)),maxR=Math.max(62,Math.min(document.body.classList.contains('kiosk')?175:125,Math.min(W,H)*.21));
   const r=list.map(i=>minR+(maxR-minR)*Math.pow(i.votes/maxV,.7));
-  const area=r.reduce((a,x)=>a+Math.PI*x*x,0),cap=.52*W*H;
-  const s=area>cap?Math.sqrt(cap/area):1;return r.map(x=>Math.max(22,x*s));
+  const area=r.reduce((a,x)=>a+Math.PI*x*x,0),cap=.5*W*H;
+  let s=1,k=1;
+  if(area>cap){s=Math.max(.72,Math.sqrt(cap/area));k=Math.max(1,Math.sqrt(area*s*s/.5/(W*H)))}
+  const nw=W*k,nh=H*k;if(Math.abs(nw-G.WW)>1||Math.abs(nh-G.WH)>1){const fx=nw/G.WW,fy=nh/G.WH;nodes.forEach(n=>{n.x*=fx;n.y*=fy});CAM.cx*=fx;CAM.tcx*=fx;CAM.cy*=fy;CAM.tcy*=fy}
+  G.WW=nw;G.WH=nh;world.style.width=G.WW+'px';world.style.height=G.WH+'px';
+  return r.map(x=>Math.max(22,x*s));
 }
 function renderStage(){
-  const list=filtered(),W=stage.clientWidth,H=stage.clientHeight,rs=sizeFor(list),keep=new Set();
+  const list=filtered(),rs=sizeFor(list),W=stage.clientWidth,H=stage.clientHeight,keep=new Set();
   const lead=list.reduce((m,i)=>i.votes>(m?.votes||1)?i:m,null);
   list.forEach((i,ix)=>{
     keep.add(i.k);let n=nodes.get(i.k);
-    if(!n){const el=document.createElement('button');el.className='bub'+(S.loaded?' pop':'');el.dataset.k=i.k;stage.appendChild(el);
-      n={el,x:W/2+(Math.random()-.5)*W*.5,y:H/2+(Math.random()-.5)*H*.5,vx:0,vy:0,r:RM?rs[ix]:6,dr:0,ph:Math.random()*6.3,key:''};nodes.set(i.k,n)}
+    if(!n){const el=document.createElement('button');el.className='bub'+(S.loaded?' pop':'');el.dataset.k=i.k;world.appendChild(el);
+      const vw=W/CAM.z,vh=H/CAM.z,fresh=S.loaded&&nodes.size>0;
+      const bx=fresh?CAM.cx:G.WW/2,by=fresh?CAM.cy:G.WH/2,sx=fresh?Math.min(vw,G.WW)*.35:G.WW*.5,sy=fresh?Math.min(vh,G.WH)*.35:G.WH*.5;
+      n={el,x:bx+(Math.random()-.5)*sx,y:by+(Math.random()-.5)*sy,vx:0,vy:0,r:RM?rs[ix]:6,dr:0,ph:Math.random()*6.3,key:''};nodes.set(i.k,n);if(fresh&&!RM){setTimeout(()=>{el.classList.add('grow');setTimeout(()=>el.classList.remove('grow'),1000)},200)}}
     n.tr=rs[ix];
     const key=[i.title,i.votes,i.status,i.sup,i.cat].join('|');
     if(n.key!==key){n.key=key;const c=CM[i.cat];
@@ -362,19 +379,54 @@ function pulse(n,d){
   if(RM||paused)return;n.rv=(n.rv||0)+Math.min(14,4+d*3);
   n.el.classList.remove('grow');void n.el.offsetWidth;n.el.classList.add('grow');
   const p=document.createElement('span');p.className='plus';p.textContent='+'+d;
-  p.style.left=Math.min(Math.max(n.x,24),stage.clientWidth-24)+'px';p.style.top=Math.max(n.y-n.r,24)+'px';stage.appendChild(p);setTimeout(()=>p.remove(),1300);
+  p.style.left=n.x+'px';p.style.top=Math.max(n.y-n.r,24)+'px';world.appendChild(p);setTimeout(()=>p.remove(),1300);
   setTimeout(()=>n.el.classList.remove('grow'),1000);
+}
+const zf=()=>Math.min(1,(stage.clientWidth||1)/G.WW,(stage.clientHeight||1)/G.WH);
+const zMin=()=>zf(),zMax=()=>Math.max(2.5,zf()*3);
+const clampZ=z=>Math.min(zMax(),Math.max(zMin(),z));
+function clampCam(o,z){
+  const W=stage.clientWidth,H=stage.clientHeight,hw=W/(2*z),hh=H/(2*z);
+  o.cx=G.WW*z<=W?G.WW/2:Math.min(Math.max(o.cx,hw),G.WW-hw);
+  o.cy=G.WH*z<=H?G.WH/2:Math.min(Math.max(o.cy,hh),G.WH-hh);
+}
+function camStep(){
+  const W=stage.clientWidth,H=stage.clientHeight;
+  if(CAM.fit||isKiosk()){CAM.tz=zf();CAM.tcx=G.WW/2;CAM.tcy=G.WH/2}
+  CAM.tz=clampZ(CAM.tz);const T={cx:CAM.tcx,cy:CAM.tcy};clampCam(T,CAM.tz);CAM.tcx=T.cx;CAM.tcy=T.cy;
+  const e=RM?1:.2;CAM.z+=(CAM.tz-CAM.z)*e;CAM.cx+=(CAM.tcx-CAM.cx)*e;CAM.cy+=(CAM.tcy-CAM.cy)*e;
+  const C2={cx:CAM.cx,cy:CAM.cy};clampCam(C2,CAM.z);CAM.cx=C2.cx;CAM.cy=C2.cy;
+  const tx=W/2-CAM.cx*CAM.z,ty=H/2-CAM.cy*CAM.z;
+  world.style.transform=`translate(${tx.toFixed(1)}px,${ty.toFixed(1)}px) scale(${CAM.z.toFixed(4)})`;
+  const zoomed=CAM.z>zf()*1.04;
+  stage.style.touchAction=zoomed?'none':'pan-y';stage.classList.toggle('grab',zoomed);
+  return {tx,ty};
+}
+let lastZ='';
+function zoomUI(){
+  const pct=Math.round(CAM.tz/zf()*100)+'%',key=pct+CAM.fit+(zf()<.75)+(nodes.size>0);if(key===lastZ)return;lastZ=key;
+  $('#zlvl').textContent=pct;
+  $('.zoom [data-z=out]').disabled=CAM.tz<=zf()*1.01;$('.zoom [data-z=in]').disabled=CAM.tz>=zMax()*.99;
+  $('#zhint').hidden=!(CAM.fit&&zf()<.75&&nodes.size>0);
+}
+function zoomTo(z2,sx,sy,instant){
+  const W=stage.clientWidth,H=stage.clientHeight,z0=instant?CAM.z:CAM.tz,cx0=instant?CAM.cx:CAM.tcx,cy0=instant?CAM.cy:CAM.tcy;
+  const tx=W/2-cx0*z0,ty=H/2-cy0*z0,wx=(sx-tx)/z0,wy=(sy-ty)/z0;
+  z2=clampZ(z2);CAM.fit=z2<=zf()*1.01;CAM.tz=z2;CAM.tcx=wx+(W/2-sx)/z2;CAM.tcy=wy+(H/2-sy)/z2;
+  if(instant){CAM.z=CAM.tz;CAM.cx=CAM.tcx;CAM.cy=CAM.tcy}
+  $('#zst').textContent='التكبير '+Math.round(z2/zf()*100)+'٪';
 }
 function step(t){
   if(U.view==='bubbles'&&nodes.size&&stageVisible&&!document.hidden){
-    const W=stage.clientWidth,H=stage.clientHeight,a=[...nodes.values()];
+    const cam=camStep();zoomUI();
+    const W=G.WW,H=G.WH,a=[...nodes.values()];
     for(const n of a){if(RM)n.r=n.tr;else{n.rv=(n.rv||0)*.84+(n.tr-n.r)*.05;n.r=Math.max(4,n.r+n.rv)}
       if(!paused){n.vx+=Math.sin(t/1800+n.ph)*.014;n.vy+=Math.cos(t/2300+n.ph*1.3)*.014}
       n.vx+=(W/2-n.x)*.00010;n.vy+=(H/2-n.y)*.00016}
     for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){const p=a[i],q=a[j];let dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||.01;const m=p.r+q.r+10;
       if(d<m){const o=(m-d)/2*.5,ux=dx/d,uy=dy/d;p.x-=ux*o;p.y-=uy*o;q.x+=ux*o;q.y+=uy*o;p.vx-=ux*.05;p.vy-=uy*.05;q.vx+=ux*.05;q.vy+=uy*.05}}
-    const obs=[$('#pause'),document.body.classList.contains('kiosk')?$('#kside'):null].filter(o=>o&&o.offsetWidth).map(o=>[o.offsetLeft,o.offsetTop,o.offsetLeft+o.offsetWidth,o.offsetTop+o.offsetHeight]);
-    for(const kc of obs)for(const n of a){const cx=Math.min(Math.max(n.x,kc[0]),kc[2]),cy=Math.min(Math.max(n.y,kc[1]),kc[3]);let dx=n.x-cx,dy=n.y-cy,d=Math.hypot(dx,dy);const m=n.r+10;
+    const obs=[$('#pause'),isKiosk()?$('#kside'):$('.zoom')].filter(o=>o&&o.offsetWidth).map(o=>[(o.offsetLeft-cam.tx)/CAM.z,(o.offsetTop-cam.ty)/CAM.z,(o.offsetLeft+o.offsetWidth-cam.tx)/CAM.z,(o.offsetTop+o.offsetHeight-cam.ty)/CAM.z]);
+    if(CAM.z<=zf()*1.04)for(const kc of obs)for(const n of a){const cx=Math.min(Math.max(n.x,kc[0]),kc[2]),cy=Math.min(Math.max(n.y,kc[1]),kc[3]);let dx=n.x-cx,dy=n.y-cy,d=Math.hypot(dx,dy);const m=n.r+10;
       if(d<m){if(d<.01){dx=1;dy=-1;d=1.41}n.x+=dx/d*(m-d)*.6;n.y+=dy/d*(m-d)*.6;n.vx+=dx/d*.1;n.vy+=dy/d*.1}}
     const fe=document.activeElement;
     for(const n of a){n.vx*=paused?.8:.94;n.vy*=paused?.8:.94;if(n.el===fe){n.vx*=.2;n.vy*=.2}n.x+=n.vx;n.y+=n.vy;const pad=n.r+6;
@@ -547,6 +599,34 @@ $('.tabs').addEventListener('keydown',e=>{
 function setPaused(p){paused=p;const b=$('#pause');b.setAttribute('aria-pressed',p);b.textContent=p?'تشغيل الحركة':'إيقاف الحركة';try{localStorage.setItem('fq-paused',p?'1':'0')}catch(e){}}
 $('#pause').addEventListener('click',()=>setPaused(!paused));setPaused(paused);
 new IntersectionObserver(es=>{stageVisible=es[0].isIntersecting}).observe(stage);
+/* zoom + pan */
+$('.zoom').addEventListener('click',e=>{const b=e.target.closest('[data-z]');if(!b||b.disabled)return;const W=stage.clientWidth,H=stage.clientHeight;
+  if(b.dataset.z==='in')zoomTo(CAM.tz*1.5,W/2,H/2);if(b.dataset.z==='out')zoomTo(CAM.tz/1.5,W/2,H/2);
+  if(b.dataset.z==='fit'){CAM.fit=true;$('#zst').textContent='عرض كل الفقاعات'}});
+stage.addEventListener('keydown',e=>{if(e.target.matches('input,textarea'))return;const W=stage.clientWidth,H=stage.clientHeight;
+  if(e.key==='+'||e.key==='='){e.preventDefault();zoomTo(CAM.tz*1.5,W/2,H/2)}else if(e.key==='-'){e.preventDefault();zoomTo(CAM.tz/1.5,W/2,H/2)}else if(e.key==='0'){e.preventDefault();CAM.fit=true}});
+stage.addEventListener('focusin',e=>{const b=e.target.closest('.bub');if(!b||CAM.fit)return;const n=nodes.get(b.dataset.k);if(!n)return;
+  const W=stage.clientWidth,H=stage.clientHeight,sx=(n.x-CAM.cx)*CAM.z+W/2,sy=(n.y-CAM.cy)*CAM.z+H/2;
+  if(sx<n.r*CAM.z||sx>W-n.r*CAM.z||sy<n.r*CAM.z||sy>H-n.r*CAM.z){CAM.tcx=n.x;CAM.tcy=n.y}});
+stage.addEventListener('wheel',e=>{if(!(e.ctrlKey||e.metaKey)&&CAM.fit)return;if(isKiosk())return;e.preventDefault();const r=stage.getBoundingClientRect();
+  zoomTo(CAM.z*Math.exp(-e.deltaY*(e.ctrlKey?.01:.0025)),e.clientX-r.left,e.clientY-r.top,true)},{passive:false});
+{const P=new Map();let moved=false,pin=null,last=null;
+  const skip=t=>t.closest('.pause,.zoom,.kside,.empty');
+  const rel=e=>{const r=stage.getBoundingClientRect();return{x:e.clientX-r.left,y:e.clientY-r.top}};
+  stage.addEventListener('pointerdown',e=>{if(skip(e.target)||isKiosk())return;P.set(e.pointerId,rel(e));moved=false;last=rel(e);
+    if(P.size===2){const [a,b]=[...P.values()],m={x:(a.x+b.x)/2,y:(a.y+b.y)/2},W=stage.clientWidth,H=stage.clientHeight;
+      pin={d:Math.hypot(a.x-b.x,a.y-b.y)||1,z:CAM.z,w:{x:(m.x-(W/2-CAM.cx*CAM.z))/CAM.z,y:(m.y-(H/2-CAM.cy*CAM.z))/CAM.z}}}});
+  stage.addEventListener('pointermove',e=>{if(!P.has(e.pointerId))return;const p=rel(e);P.set(e.pointerId,p);const W=stage.clientWidth,H=stage.clientHeight;
+    if(P.size>=2&&pin){const [a,b]=[...P.values()],d=Math.hypot(a.x-b.x,a.y-b.y),m={x:(a.x+b.x)/2,y:(a.y+b.y)/2};
+      const z2=clampZ(pin.z*d/pin.d);CAM.fit=z2<=zf()*1.01;CAM.z=CAM.tz=z2;CAM.cx=CAM.tcx=pin.w.x+(W/2-m.x)/z2;CAM.cy=CAM.tcy=pin.w.y+(H/2-m.y)/z2;moved=true;return}
+    if(P.size===1&&CAM.z>zf()*1.04){const dx=p.x-last.x,dy=p.y-last.y;
+      if(!moved&&Math.hypot(dx,dy)<6)return;
+      if(!moved){moved=true;try{stage.setPointerCapture(e.pointerId)}catch(_){}stage.classList.add('grabbing')}
+      CAM.fit=false;CAM.cx-=dx/CAM.z;CAM.cy-=dy/CAM.z;CAM.tcx=CAM.cx;CAM.tcy=CAM.cy;last=p}});
+  const up=e=>{P.delete(e.pointerId);if(P.size<2)pin=null;if(P.size===1)last=[...P.values()][0];stage.classList.remove('grabbing')};
+  stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);
+  stage.addEventListener('click',e=>{if(moved){e.stopPropagation();e.preventDefault();moved=false}},true);
+}
 $('#q').addEventListener('input',e=>{U.q=e.target.value;render()});
 $('#sort').addEventListener('change',e=>{U.sort=e.target.value;renderList()});
 $('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b){U.cat=b.dataset.c;render()}});
