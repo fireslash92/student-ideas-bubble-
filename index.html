@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>فقاعة أفكار الطلاب</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@600;700&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* VOICE: lively student space, but tidy enough for the college administration
+   IDEA: the IT Club logo — white inline-outlined letters and the long white rule on steel blue
+   PICTURE: a stage of floating ideas; each bubble has a double white outline like the logo letters
+   COLOUR and TYPE: logo blue #477ab3 field, white lines, soft category fills; Reem Kufi + Tajawal
+   LAYOUT: header band = logo, tools row, stage with ranking beside it; sheets for add/detail */
+:root{color-scheme:light dark;--bg:light-dark(#477ab3,#0e2136);--bg2:light-dark(#3d6ba1,#0a192a);--ink:#fff;--soft:rgba(255,255,255,.8);--line:rgba(255,255,255,.9);
+--panel:light-dark(#fff,#142d4a);--pink:light-dark(#11263f,#e8f1fb);--mut:light-dark(#566a80,#9db3cb);--edge:light-dark(#dce5ef,#244466);--field:light-dark(#f3f6fa,#0f243c);--acc:#ffd166}
+:root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
+*{box-sizing:border-box;min-width:0}
+[hidden]{display:none!important}
+body{margin:0;background:var(--bg2);color:var(--ink);font:16px/1.6 Tajawal,"Segoe UI",Tahoma,sans-serif;overflow-x:clip}
+button,input,textarea,select{font:inherit}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.top{background:var(--bg);padding:max(14px,env(safe-area-inset-top)) max(4vw,16px) 0}
+.topin{max-width:1240px;margin:auto;display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding-bottom:16px;border-bottom:4px solid var(--line)}
+.logo{height:72px;width:auto;display:block;border-radius:8px}
+:root[data-theme=dark] .logo{outline:1px solid rgba(255,255,255,.25)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]) .logo{outline:1px solid rgba(255,255,255,.25)}}
+.brand{flex:1 1 260px}
+h1{font:700 clamp(28px,4.4vw,44px)/1.1 "Reem Kufi",Tajawal,sans-serif;margin:0;text-wrap:balance}
+.brand p{margin:4px 0 0;color:var(--soft)}
+.btn{min-height:44px;padding:8px 18px;border-radius:999px;border:2px solid var(--line);background:transparent;color:inherit;font-weight:700;cursor:pointer;white-space:nowrap}
+.btn:hover{background:rgba(255,255,255,.12)}
+.primary{background:#fff;color:#18406d;border-color:#fff}.primary:hover{background:#eaf2fb}
+.panel .btn,.sec .btn{border-color:var(--edge);color:var(--pink)}.panel .btn:hover,.sec .btn:hover{background:var(--field)}
+.panel .primary,.sec .primary{background:#2f64a0;border-color:#2f64a0;color:#fff}.panel .primary:hover,.sec .primary:hover{background:#25578f}
+.panel .primary.on{background:#1f8a64;border-color:#1f8a64}
+.banner{max-width:1240px;margin:12px auto 0;padding:10px 16px;border-radius:14px;background:rgba(255,209,102,.16);border:1px solid rgba(255,209,102,.6);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.banner .btn{min-height:36px;padding:4px 14px;font-size:14px}
+.tools{max-width:1240px;margin:auto;padding:16px max(4vw,16px) 8px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.tabs{display:flex;gap:4px;background:rgba(255,255,255,.1);border-radius:999px;padding:4px}
+.tabs button{min-height:40px;padding:6px 16px;border:0;border-radius:999px;background:transparent;color:var(--ink);font-weight:700;cursor:pointer;white-space:nowrap}
+.tabs button[aria-selected=true]{background:#fff;color:#18406d}
+.search{flex:1 1 220px;position:relative}
+.search input{width:100%;min-height:44px;border-radius:999px;border:2px solid rgba(255,255,255,.55);background:rgba(255,255,255,.1);color:#fff;padding:8px 18px;font-size:16px}
+.search input::placeholder{color:rgba(255,255,255,.7)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;width:100%;scrollbar-width:thin}
+.chip{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:4px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,.45);background:transparent;color:#fff;cursor:pointer;font-size:15px;white-space:nowrap}
+.chip i{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 2px #fff}
+.chip small{opacity:.75}
+.chip[aria-pressed=true]{background:#fff;color:#18406d;border-color:#fff}
+.wrap{max-width:1240px;margin:auto;padding:4px max(4vw,16px) 40px}
+.grid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
+@media(min-width:960px){.grid{grid-template-columns:minmax(0,1fr) 310px}}
+.stage{position:relative;height:clamp(400px,64vh,720px);border-radius:28px;overflow:hidden;border:2px solid rgba(255,255,255,.55);
+background:radial-gradient(120% 90% at 50% 40%,rgba(255,255,255,.14),transparent 70%),repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 36px),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 36px),var(--bg);touch-action:pan-y}
+.bub{position:absolute;left:0;top:0;border-radius:50%;padding:0;border:3px solid #fff;outline:1.5px solid rgba(255,255,255,.85);outline-offset:3px;cursor:pointer;color:#10253d;
+background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 38%),var(--c);box-shadow:0 10px 24px rgba(8,25,50,.28),inset 0 -8px 16px rgba(0,0,0,.08);will-change:transform;font-size:calc(var(--r,40) * .2px)}
+.bub .in{display:grid;place-content:center;justify-items:center;height:100%;padding:0 14%;text-align:center;gap:2px;transition:transform .2s}
+.bub:hover .in{transform:scale(1.05)}
+.bub b{font-weight:800;line-height:1.2;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:max(11px,1em)}
+.bub .v{font-size:max(11px,.85em);font-weight:700;opacity:.8;white-space:nowrap}
+.bub .s{font-size:max(10px,.7em);background:rgba(16,37,61,.12);border-radius:99px;padding:0 8px;white-space:nowrap}
+.bub.sm .s{display:none}
+.bub.me{outline:3px solid var(--acc);outline-offset:3px}
+.bub.pop{animation:pop .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes pop{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.bub.pop{animation:none}.bub .in{transition:none}}
+.empty{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;text-align:center;gap:12px;padding:24px}
+.empty h2{font:700 26px/1.2 "Reem Kufi",Tajawal;margin:0}
+.empty p{margin:0;color:var(--soft)}
+.empty .row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.note{color:var(--soft);font-size:14px;margin:10px 4px 0}
+.side{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.3);border-radius:24px;padding:18px 18px 10px;align-self:start}
+.side h2,.sec h2{font:700 20px/1.3 "Reem Kufi",Tajawal;margin:0 0 10px}
+.rank{list-style:none;margin:0;padding:0}
+.rank li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.18);cursor:pointer}
+.rank li:last-child{border:0}
+.rank .n{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:14px;background:var(--c);color:#10253d}
+.rank .tt{font-weight:700;line-height:1.3}
+.rank .vv{font-weight:800;font-variant-numeric:tabular-nums}
+.bar{height:6px;border-radius:9px;background:rgba(255,255,255,.18);margin-top:5px;overflow:hidden}.bar span{display:block;height:100%;background:var(--c,#fff);border-radius:9px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px;padding-top:12px;border-top:1.5px solid rgba(255,255,255,.3)}
+.stats div{text-align:center}.stats b{display:block;font-size:24px;line-height:1.1}.stats span{font-size:13px;color:var(--soft)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:14px}
+.card{background:var(--panel);color:var(--pink);border-radius:20px;padding:16px;border-top:6px solid var(--c);cursor:pointer;text-align:start;border-inline:0;border-bottom:0;display:flex;flex-direction:column;gap:6px}
+.card h3{margin:0;font-size:18px;line-height:1.3}.card p{margin:0;color:var(--mut);font-size:15px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:14px}
+.tag{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:99px;background:var(--field);color:var(--pink);font-size:13px;font-weight:700;white-space:nowrap}
+.tag i{width:10px;height:10px;border-radius:50%;background:var(--c)}
+.st-new{background:#e6eef8;color:#244a75}.st-review{background:#fff1cc;color:#7a5200}.st-approved{background:#dcf3e8;color:#16603f}.st-done{background:#1f8a64;color:#fff}.st-merged{background:#eee;color:#555}
+.listbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.listbar select{min-height:44px;border-radius:12px;padding:6px 12px;font-size:16px}
+.scrim{position:fixed;inset:0;background:rgba(6,18,34,.5);z-index:20}
+.panel{background:var(--panel);color:var(--pink)}
+.sheet{position:fixed;z-index:21;inset-inline:0;bottom:0;max-height:90vh;overflow:auto;border-radius:24px 24px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(0,0,0,.3)}
+@media(min-width:720px){.sheet{inset:auto;top:50%;left:50%;transform:translate(-50%,-50%);width:min(580px,92vw);max-height:86vh;border-radius:24px;bottom:auto}}
+.x{position:sticky;top:0;float:left;width:44px;height:44px;border-radius:50%;border:0;background:var(--field);color:var(--pink);font-size:24px;cursor:pointer;line-height:1}
+.sheet h2{font:700 26px/1.25 "Reem Kufi",Tajawal;margin:10px 0 8px;text-wrap:balance}
+.sheet h3{font-size:17px;margin:20px 0 8px}
+.muted{color:var(--mut);font-size:14px}
+.vote{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px;border-radius:16px;background:var(--field);margin:14px 0}
+.vote strong{font-size:34px;line-height:1}.vote .grow{flex:1}
+label.f{display:block;font-weight:700;margin:14px 0 6px}
+.inp{width:100%;min-height:46px;border-radius:12px;border:1.5px solid var(--edge);background:var(--field);color:var(--pink);padding:10px 14px;font-size:16px}
+textarea.inp{min-height:96px;resize:vertical}
+.cnt{font-size:13px;color:var(--mut);text-align:left}
+.catpick{display:flex;flex-wrap:wrap;gap:8px}
+.catpick label{display:inline-flex;gap:8px;align-items:center;min-height:42px;padding:4px 14px;border-radius:99px;border:1.5px solid var(--edge);cursor:pointer;font-size:15px}
+.catpick input{accent-color:#2f64a0;width:18px;height:18px;margin:0}
+.catpick label:has(input:checked){border-color:#2f64a0;background:var(--field);font-weight:700}
+.sim{margin-top:14px;border-radius:14px;padding:12px 14px;background:#fff6dc;color:#4d3a00}
+.sim[hidden]{display:none}
+.sim ul{list-style:none;margin:8px 0 0;padding:0}.sim li{display:flex;gap:8px;align-items:center;justify-content:space-between;padding:6px 0;border-top:1px solid rgba(0,0,0,.08)}
+.sim .btn{min-height:38px;padding:4px 12px;font-size:14px;border-color:#c9a64a;color:#4d3a00}
+.notes{list-style:none;margin:0;padding:0}.notes li{padding:10px 12px;border-radius:12px;background:var(--field);margin-bottom:8px}
+.notes small{display:block;color:var(--mut)}
+.row2{display:flex;gap:8px}.row2 .inp{flex:1}
+.adm{margin-top:20px;padding:14px;border-radius:16px;border:1.5px dashed var(--edge)}
+.adm .grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px}
+.act{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.danger{color:#b3261e!important;border-color:#e7b7b3!important}
+.sec{background:var(--panel);color:var(--pink);border-radius:24px;padding:20px;margin-bottom:18px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:12px}
+.kpis div{background:var(--field);border-radius:16px;padding:14px}.kpis b{display:block;font-size:clamp(28px,4vw,38px);line-height:1.1}.kpis span{color:var(--mut);font-size:14px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:18px}
+.hrow{display:grid;grid-template-columns:minmax(0,9em) minmax(0,1fr) 4.5em;gap:10px;align-items:center;padding:6px 0;font-size:15px}
+.hrow .bar{height:12px;background:var(--field);margin:0}.hrow .num{text-align:left;font-variant-numeric:tabular-nums;white-space:nowrap}
+table{width:100%;border-collapse:collapse;font-size:15px}th,td{text-align:start;padding:10px 8px;border-bottom:1px solid var(--edge);vertical-align:middle}th{color:var(--mut);font-weight:700;font-size:13px}
+td.num{text-align:left;font-variant-numeric:tabular-nums}
+td select{min-height:40px;border-radius:10px;padding:4px 8px;font-size:15px}
+td .btn{min-height:38px;padding:4px 12px;font-size:14px}
+.toast{position:fixed;z-index:30;bottom:calc(96px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#10253d;color:#fff;padding:12px 20px;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.3);max-width:90vw;opacity:0;pointer-events:none;transition:opacity .25s}
+.toast.on{opacity:1}
+pre.rep{white-space:pre-wrap;background:var(--field);padding:12px;border-radius:12px;font:14px/1.6 Tajawal}
+@media(max-width:600px){
+ .logo{height:52px}.topin{gap:12px}
+ #addBtn{position:fixed;z-index:15;bottom:calc(14px + env(safe-area-inset-bottom));inset-inline:16px;min-height:54px;font-size:18px;box-shadow:0 10px 30px rgba(6,20,40,.45)}
+ body{padding-bottom:90px}.tabs{width:100%}.tabs button{flex:1;padding:6px 8px}
+ .stage{height:clamp(380px,62vh,620px);border-radius:22px}
+ table{font-size:14px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--edge)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:6.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:6em;margin-inline-start:-6.5em;color:var(--mut);font-size:13px}.stack td:empty{display:none}
+}
+</style>
+<script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
+</head>
+<body>
+<header class="top"><div class="topin">
+  <img class="logo" src="logo-wide.jpg" alt="IT Club — Al Buraimi University College">
+  <div class="brand"><h1>فقاعة أفكار الطلاب</h1><p>مساحة تفاعلية لاستشراف مستقبل كلية البريمي الجامعية</p></div>
+  <button class="btn primary" id="addBtn">+ أضف فكرتك</button>
+</div>
+<div class="banner" id="banner" hidden></div>
+</header>
+<nav class="tools">
+  <div class="tabs" role="tablist">
+    <button role="tab" data-v="bubbles" aria-selected="true">الفقاعات</button>
+    <button role="tab" data-v="list" aria-selected="false">قائمة الأفكار</button>
+    <button role="tab" data-v="admin" aria-selected="false" id="admTab" hidden>لوحة الإشراف</button>
+  </div>
+  <div class="search"><input id="q" type="search" placeholder="ابحث عن فكرة…" aria-label="البحث عن الأفكار"></div>
+  <div class="chips" id="chips"></div>
+</nav>
+<main class="wrap">
+  <section id="v-bubbles" class="grid">
+    <div>
+      <div class="stage" id="stage"><div class="empty" id="empty" hidden></div></div>
+      <p class="note">حجم الفقاعة يعكس مستوى التأييد، وليس بالضرورة قابلية تنفيذ الفكرة أو أولوية اعتمادها. اضغط على أي فقاعة لعرض تفاصيلها وتأييدها.</p>
+    </div>
+    <aside class="side"><h2>الأكثر تأييدًا</h2><ol class="rank" id="top"></ol><div class="stats" id="stats"></div></aside>
+  </section>
+  <section id="v-list" hidden>
+    <div class="listbar"><strong id="lcount"></strong>
+      <select id="sort" aria-label="الترتيب"><option value="votes">الأكثر تأييدًا</option><option value="new">الأحدث</option></select></div>
+    <div class="cards" id="cards"></div>
+  </section>
+  <section id="v-admin" hidden></section>
+</main>
+<div class="scrim" id="scrim" hidden></div>
+<div class="sheet panel" id="sheet" role="dialog" aria-modal="true" hidden><button class="x" id="x" aria-label="إغلاق">×</button><div id="sb"></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+{
+const CATS=[{k:'study',n:'الدراسة والتعلم',c:'#ffd166'},{k:'facil',n:'المرافق والترفيه',c:'#7fe3c4'},{k:'digital',n:'الخدمات الرقمية',c:'#c9b8ff'},{k:'innov',n:'الابتكار وريادة الأعمال',c:'#ffa883'},{k:'act',n:'الأنشطة الثقافية والرياضية',c:'#ff9cc4'},{k:'other',n:'أخرى',c:'#e8eef6'}];
+const CM=Object.fromEntries(CATS.map(c=>[c.k,c]));
+const ST={new:'جديدة',review:'قيد الدراسة',approved:'معتمدة',done:'منفذة'};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const S={posts:{},supports:{},notes:{},meta:{},me:null,admin:false,canWrite:true,demo:false,live:false,db:null};
+const real={};
+const U={view:'bubbles',cat:'all',q:'',sort:'votes',sheet:null,k:null};
+let D={all:[],vis:[],byK:{},sup:{},notes:{},merged:{}};
+
+const supLabel=n=>n===0?'لا مؤيدين بعد':n===1?'مؤيد واحد':n===2?'مؤيدان':n<=10?n+' مؤيدين':n+' مؤيدًا';
+const ago=t=>{const r=new Intl.RelativeTimeFormat('ar',{numeric:'auto'});const s=(t-Date.now())/1000;const a=Math.abs(s);
+ return a<3600?r.format(Math.round(s/60),'minute'):a<86400?r.format(Math.round(s/3600),'hour'):r.format(Math.round(s/86400),'day')};
+const norm=s=>String(s).replace(/[ً-ْـ]/g,'').replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').toLowerCase();
+const STOP=new Set(['في','من','علي','الي','عن','مع','هذا','هذه','ذلك','التي','الذي','او','ثم','كل','بين','جديد','جديده','انشاء','توفير','تطوير','اضافه','عمل']);
+const toks=s=>[...new Set(norm(s).split(/[^\p{L}\p{N}]+/u).map(w=>w.replace(/^(وال|بال|كال|فال|لل|ال)/,'')).map(w=>w.length>4?w.replace(/(ات|ين|ون|يه|ه)$/,''):w).filter(w=>w.length>2&&!STOP.has(w)))];
+const simScore=(a,b)=>{const A=toks(a),B=new Set(toks(b));if(!A.length||!B.size)return 0;let n=0;A.forEach(w=>B.has(w)&&n++);return n/Math.min(A.length,B.size)};
+let tt;const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2800)};
+const newKey=()=>'i'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+
+/* ---------- data shaping ---------- */
+function clean(kind,d){
+  if(kind==='posts')return{items:(Array.isArray(d?.items)?d.items:[]).filter(x=>x&&typeof x.k==='string'&&/^[\w-]{1,40}$/.test(x.k)&&typeof x.title==='string').map(x=>({k:x.k,title:x.title.slice(0,60),desc:String(x.desc||'').slice(0,400),cat:CM[x.cat]?x.cat:'other',t:+x.t||0}))};
+  if(kind==='supports')return{ids:(Array.isArray(d?.ids)?d.ids:[]).filter(x=>typeof x==='string').slice(0,500)};
+  if(kind==='notes')return{items:(Array.isArray(d?.items)?d.items:[]).filter(x=>x&&typeof x.k==='string'&&typeof x.text==='string').map(x=>({k:x.k,text:x.text.slice(0,200),t:+x.t||0}))};
+  return{status:ST[d?.status]?d.status:'new',hidden:!!d?.hidden,into:typeof d?.into==='string'?d.into:null};
+}
+function derive(){
+  const all=[],byK={};
+  for(const uid in S.posts)for(const it of S.posts[uid].items){const m=S.meta[it.k]||{};const i={...it,author:uid,status:m.status||'new',hidden:!!m.hidden,into:m.into&&m.into!==it.k?m.into:null};all.push(i);byK[it.k]=i}
+  const res=k=>{let n=0;while(byK[k]?.into&&byK[byK[k].into]&&n++<10)k=byK[k].into;return k};
+  const sup={},notes={},merged={};
+  all.forEach(i=>{sup[i.k]=new Set();notes[i.k]=[];merged[i.k]=0});
+  for(const uid in S.supports)for(const id of S.supports[uid].ids){const t=res(id);if(sup[t])sup[t].add(uid)}
+  for(const uid in S.notes)for(const n of S.notes[uid].items){const t=res(n.k);if(notes[t])notes[t].push({...n,uid})}
+  all.forEach(i=>{if(i.into){i.target=res(i.k);if(i.target!==i.k)merged[i.target]++}});
+  all.forEach(i=>{i.votes=sup[i.k].size;i.mine=i.author===S.me;i.sup=sup[i.k].has(S.me)});
+  Object.values(notes).forEach(a=>a.sort((x,y)=>y.t-x.t));
+  D={all,byK,sup,notes,merged,res,vis:all.filter(i=>!i.hidden&&!i.into)};
+}
+const filtered=()=>{const q=norm(U.q.trim());return D.vis.filter(i=>(U.cat==='all'||i.cat===U.cat)&&(!q||norm(i.title+' '+i.desc).includes(q)))};
+
+/* ---------- writes ---------- */
+const queue={};
+function write(path,data){
+  const [col,id]=path.split('/');
+  S[col][id]=clean(col,data);render();
+  if(S.demo||!S.db)return Promise.resolve();
+  const p=(queue[path]||Promise.resolve()).then(()=>S.db.doc(path).set(data));
+  queue[path]=p.catch(()=>{});
+  return p.catch(e=>{
+    if(e?.code==='invalid_argument'){S.canWrite=false;toast('لا تملك صلاحية المشاركة. اطلب من مسؤول المنصة صلاحية «مساهم».')}
+    else if(e?.code==='quota_exceeded')toast('امتلأت سعة المنصة، تواصل مع المسؤول.');
+    else toast('تعذّر الحفظ، حاول مرة أخرى.');
+  });
+}
+const canAct=()=>{if(!S.me){toast('سجّل الدخول لتتمكن من المشاركة.');return false}if(!S.canWrite){toast('لا تملك صلاحية المشاركة. اطلب من مسؤول المنصة صلاحية «مساهم».');return false}return true};
+function toggleSupport(k){
+  if(!canAct())return;
+  let ids=[...(S.supports[S.me]?.ids||[])];const on=D.sup[k]?.has(S.me);
+  ids=on?ids.filter(id=>D.res(id)!==k):[...ids,k];
+  write('supports/'+S.me,{ids});toast(on?'أُلغي تأييدك.':'شكرًا! زاد حجم الفقاعة بتأييدك.');
+}
+function setMeta(k,patch){const m={...(S.meta[k]||{status:'new',hidden:false,into:null}),...patch};write('meta/'+k,{status:m.status,hidden:m.hidden,into:m.into||null})}
+
+/* ---------- bubbles ---------- */
+const stage=$('#stage'),nodes=new Map();
+function sizeFor(list){
+  const W=stage.clientWidth,H=stage.clientHeight;
+  const maxV=Math.max(5,...list.map(i=>i.votes));
+  const minR=Math.max(32,Math.min(48,W*.075)),maxR=Math.max(62,Math.min(125,Math.min(W,H)*.21));
+  const r=list.map(i=>minR+(maxR-minR)*Math.sqrt(i.votes/maxV));
+  const area=r.reduce((a,x)=>a+Math.PI*x*x,0),cap=.52*W*H;
+  const s=area>cap?Math.sqrt(cap/area):1;return r.map(x=>Math.max(24,x*s));
+}
+function renderStage(){
+  const list=filtered(),W=stage.clientWidth,H=stage.clientHeight,rs=sizeFor(list),keep=new Set();
+  list.forEach((i,ix)=>{
+    keep.add(i.k);let n=nodes.get(i.k);
+    if(!n){const el=document.createElement('button');el.className='bub'+(S.loaded?' pop':'');el.dataset.k=i.k;stage.appendChild(el);
+      n={el,x:W/2+(Math.random()-.5)*W*.7,y:H/2+(Math.random()-.5)*H*.7,vx:0,vy:0,r:RM?rs[ix]:6,dr:0,ph:Math.random()*6.3,key:''};nodes.set(i.k,n)}
+    n.tr=rs[ix];
+    const key=[i.title,i.votes,i.status,i.sup,i.cat].join('|');
+    if(n.key!==key){n.key=key;const c=CM[i.cat];
+      n.el.style.setProperty('--c',c.c);n.el.classList.toggle('me',i.sup);
+      n.el.setAttribute('aria-label',i.title+'، '+supLabel(i.votes)+'، '+c.n);
+      n.el.innerHTML=`<span class="in"><b>${esc(i.title)}</b><span class="v">${i.votes} ♥</span>${i.status!=='new'?`<span class="s">${ST[i.status]}</span>`:''}</span>`}
+    n.el.classList.toggle('sm',n.tr<46);
+  });
+  for(const [k,n] of nodes)if(!keep.has(k)){n.el.remove();nodes.delete(k)}
+  const e=$('#empty');
+  if(!S.loaded&&!S.demo){e.hidden=false;e.innerHTML='<p>جارٍ تحميل الأفكار…</p>'}
+  else if(!D.vis.length){e.hidden=false;e.innerHTML=`<h2>لا توجد أفكار بعد</h2><p>كن أول من يطلق فقاعة لمستقبل الكلية.</p><div class="row"><button class="btn primary" data-a="add">+ أضف فكرتك</button>${S.live?'<button class="btn" data-a="demo">معاينة بأمثلة</button>':''}</div>`}
+  else if(!list.length){e.hidden=false;e.innerHTML='<p>لا توجد أفكار مطابقة للبحث أو المجال المختار.</p>'}
+  else e.hidden=true;
+}
+function step(t){
+  if(U.view==='bubbles'&&nodes.size){
+    const W=stage.clientWidth,H=stage.clientHeight,a=[...nodes.values()];
+    for(const n of a){n.r+=(n.tr-n.r)*.09;
+      if(!RM){n.vx+=Math.sin(t/1800+n.ph)*.014;n.vy+=Math.cos(t/2300+n.ph*1.3)*.014}
+      n.vx+=(W/2-n.x)*.00010;n.vy+=(H/2-n.y)*.00016}
+    for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){const p=a[i],q=a[j];let dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||.01;const m=p.r+q.r+10;
+      if(d<m){const o=(m-d)/2*.5,ux=dx/d,uy=dy/d;p.x-=ux*o;p.y-=uy*o;q.x+=ux*o;q.y+=uy*o;p.vx-=ux*.05;p.vy-=uy*.05;q.vx+=ux*.05;q.vy+=uy*.05}}
+    for(const n of a){n.vx*=.94;n.vy*=.94;n.x+=n.vx;n.y+=n.vy;const pad=n.r+6;
+      if(n.x<pad){n.x=pad;n.vx=Math.abs(n.vx)*.5}if(n.x>W-pad){n.x=W-pad;n.vx=-Math.abs(n.vx)*.5}
+      if(n.y<pad){n.y=pad;n.vy=Math.abs(n.vy)*.5}if(n.y>H-pad){n.y=H-pad;n.vy=-Math.abs(n.vy)*.5}
+      if(Math.abs(n.r-n.dr)>.4){n.dr=n.r;const s=(n.r*2).toFixed(1)+'px';n.el.style.width=s;n.el.style.height=s;n.el.style.setProperty('--r',n.r.toFixed(1))}
+      n.el.style.transform=`translate(${(n.x-n.r).toFixed(1)}px,${(n.y-n.r).toFixed(1)}px)`}
+  }
+  requestAnimationFrame(step);
+}
+
+/* ---------- other views ---------- */
+function renderChips(){
+  const cnt=c=>D.vis.filter(i=>i.cat===c).length;
+  $('#chips').innerHTML=`<button class="chip" data-c="all" aria-pressed="${U.cat==='all'}">كل المجالات <small>${D.vis.length}</small></button>`+
+    CATS.map(c=>`<button class="chip" data-c="${c.k}" style="--c:${c.c}" aria-pressed="${U.cat===c.k}"><i></i>${c.n} <small>${cnt(c.k)}</small></button>`).join('');
+}
+function renderSide(){
+  const top=[...D.vis].sort((a,b)=>b.votes-a.votes||b.t-a.t).slice(0,6),mx=Math.max(1,...top.map(i=>i.votes));
+  $('#top').innerHTML=top.length?top.map((i,ix)=>`<li data-k="${i.k}" style="--c:${CM[i.cat].c}"><span class="n">${ix+1}</span><div><div class="tt">${esc(i.title)}</div><div class="bar"><span style="width:${i.votes/mx*100}%"></span></div></div><span class="vv">${i.votes}</span></li>`).join(''):'<li style="cursor:default;display:block">ستظهر هنا الأفكار الأكثر دعمًا.</li>';
+  const votes=D.vis.reduce((a,i)=>a+i.votes,0);
+  $('#stats').innerHTML=`<div><b>${D.vis.length}</b><span>فكرة</span></div><div><b>${votes}</b><span>تأييد</span></div><div><b>${D.vis.filter(i=>i.status==='done').length}</b><span>منفذة</span></div>`;
+}
+const tags=i=>`<span class="tag" style="--c:${CM[i.cat].c}"><i></i>${CM[i.cat].n}</span><span class="tag st-${i.status}">${ST[i.status]}</span>`;
+function renderList(){
+  const l=filtered().sort(U.sort==='new'?(a,b)=>b.t-a.t:(a,b)=>b.votes-a.votes||b.t-a.t);
+  $('#lcount').textContent=l.length+' فكرة';
+  $('#cards').innerHTML=l.length?l.map(i=>`<button class="card" data-k="${i.k}" style="--c:${CM[i.cat].c}"><div class="meta">${tags(i)}</div><h3>${esc(i.title)}</h3>${i.desc?`<p>${esc(i.desc)}</p>`:''}<div class="meta"><strong>${supLabel(i.votes)}</strong>${i.sup?'<span class="tag st-approved">تؤيدها ✓</span>':''}<span class="muted">${D.notes[i.k].length} إضافة</span></div></button>`).join(''):'<p>لا توجد أفكار مطابقة.</p>';
+}
+function report(){
+  const v=D.vis,d=new Date().toLocaleDateString('ar-OM',{year:'numeric',month:'long',day:'numeric'});
+  const L=[`تقرير منصة «فقاعة أفكار الطلاب» — ${d}`,`عدد الأفكار: ${v.length}`,`إجمالي التأييدات: ${v.reduce((a,i)=>a+i.votes,0)}`,`عدد المشاركين: ${participants()}`,'','حسب المجال:'];
+  CATS.forEach(c=>{const x=v.filter(i=>i.cat===c.k);if(x.length)L.push(`- ${c.n}: ${x.length} فكرة، ${x.reduce((a,i)=>a+i.votes,0)} تأييد`)});
+  L.push('','حسب الحالة:');Object.entries(ST).forEach(([k,n])=>L.push(`- ${n}: ${v.filter(i=>i.status===k).length}`));
+  L.push('','الأفكار الأكثر تأييدًا:');[...v].sort((a,b)=>b.votes-a.votes).slice(0,10).forEach((i,ix)=>L.push(`${ix+1}. ${i.title} — ${i.votes} تأييد (${ST[i.status]}، ${CM[i.cat].n})`));
+  L.push('','ملاحظة: حجم التأييد يعكس اهتمام الطلبة وليس بالضرورة قابلية التنفيذ.');return L.join('\n');
+}
+const participants=()=>new Set([...Object.keys(S.posts).filter(u=>S.posts[u].items.length),...Object.keys(S.supports).filter(u=>S.supports[u].ids.length),...Object.keys(S.notes)]).size;
+function renderAdmin(){
+  const v=D.vis,tot=v.reduce((a,i)=>a+i.votes,0);
+  const byCat=CATS.map(c=>{const x=v.filter(i=>i.cat===c.k);return{c,n:x.length,s:x.reduce((a,i)=>a+i.votes,0)}}),mc=Math.max(1,...byCat.map(x=>x.s));
+  const bySt=Object.entries(ST).map(([k,n])=>({k,n,c:v.filter(i=>i.status===k).length})),ms=Math.max(1,...bySt.map(x=>x.c));
+  const rows=[...D.all].sort((a,b)=>b.votes-a.votes);
+  $('#v-admin').innerHTML=`
+  <div class="sec"><h2>نظرة عامة</h2><div class="kpis"><div><b>${v.length}</b><span>فكرة معروضة</span></div><div><b>${tot}</b><span>إجمالي التأييدات</span></div><div><b>${participants()}</b><span>طالب مشارك</span></div><div><b>${v.filter(i=>i.status==='review').length}</b><span>قيد الدراسة</span></div></div></div>
+  <div class="two">
+   <div class="sec"><h2>التأييد حسب المجال</h2>${byCat.map(x=>`<div class="hrow" style="--c:${x.c.c}"><span>${x.c.n}</span><div class="bar"><span style="width:${x.s/mc*100}%"></span></div><span class="num">${x.s} · ${x.n} فكرة</span></div>`).join('')}</div>
+   <div class="sec"><h2>الأفكار حسب الحالة</h2>${bySt.map(x=>`<div class="hrow" style="--c:#2f64a0"><span>${x.n}</span><div class="bar"><span style="width:${x.c/ms*100}%"></span></div><span class="num">${x.c}</span></div>`).join('')}</div>
+  </div>
+  <div class="sec"><div class="listbar"><h2 style="margin:0">التقرير النصي</h2><button class="btn primary" data-a="copy">نسخ التقرير</button></div><pre class="rep" id="rep">${esc(report())}</pre></div>
+  <div class="sec"><h2>إدارة الأفكار ومراجعة المحتوى</h2>${rows.length?`<table class="stack"><thead><tr><th>الفكرة</th><th>المجال</th><th>التأييد</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody>${rows.map(i=>`<tr><td><a href="#" data-k="${i.k}" style="color:inherit;font-weight:700">${esc(i.title)}</a>${i.hidden?' <span class="tag st-merged">مخفية</span>':''}${i.into?` <span class="tag st-merged">مدموجة في: ${esc(D.byK[i.target]?.title||'')}</span>`:''}</td><td>${CM[i.cat].n}</td><td class="num">${i.votes}</td><td><select data-st="${i.k}" aria-label="الحالة">${Object.entries(ST).map(([k,n])=>`<option value="${k}"${i.status===k?' selected':''}>${n}</option>`).join('')}</select></td><td>${i.into?`<button class="btn" data-unmerge="${i.k}">فك الدمج</button>`:`<button class="btn" data-hide="${i.k}">${i.hidden?'إظهار':'إخفاء'}</button>`}</td></tr>`).join('')}</tbody></table>`:'<p class="muted">لا توجد أفكار بعد.</p>'}</div>`;
+}
+
+/* ---------- sheets ---------- */
+function openSheet(kind,k){U.sheet=kind;U.k=k||null;$('#scrim').hidden=false;$('#sheet').hidden=false;kind==='add'?drawAdd():drawDetail();setTimeout(()=>($('#sheet').querySelector('input:not([type=radio])')||$('#x')).focus({preventScroll:true}),50)}
+function closeSheet(){U.sheet=null;$('#scrim').hidden=true;$('#sheet').hidden=true}
+function drawDetail(){
+  const i=D.byK[U.k];if(!i)return closeSheet();
+  const notes=D.notes[i.k],others=D.vis.filter(x=>x.k!==i.k).map(x=>({x,s:simScore(i.title+' '+i.desc,x.title+' '+x.desc)})).sort((a,b)=>b.s-a.s);
+  $('#sb').innerHTML=`<div class="meta">${tags(i)}</div><h2>${esc(i.title)}</h2>${i.desc?`<p>${esc(i.desc)}</p>`:''}
+  <p class="muted">طُرحت ${i.t?ago(i.t):''}${i.mine?' — هذه فكرتك':''}</p>
+  ${i.into?`<p class="muted">دُمجت هذه الفكرة مع «${esc(D.byK[i.target]?.title||'')}».</p>`:`<div class="vote"><strong>${i.votes}</strong><span class="grow">${supLabel(i.votes)}</span><button class="btn primary${i.sup?' on':''}" data-a="sup">${i.sup?'تؤيدها ✓ (إلغاء)':'أؤيد الفكرة'}</button></div>`}
+  ${D.merged[i.k]?`<p class="muted">دُمجت معها ${D.merged[i.k]} فكرة مشابهة مع الاحتفاظ بتأييداتها.</p>`:''}
+  <h3>إضافات ومقترحات الطلبة (${notes.length})</h3>
+  ${notes.length?`<ul class="notes">${notes.map(n=>`<li>${esc(n.text)}<small>${ago(n.t)}</small></li>`).join('')}</ul>`:'<p class="muted">لا توجد إضافات بعد. طوّر الفكرة بمقترحك.</p>'}
+  <form class="row2" id="fNote"><input class="inp" id="nT" maxlength="200" placeholder="أضف تحسينًا أو مقترحًا مرتبطًا…" aria-label="إضافة مقترح"><button class="btn">إضافة</button></form>
+  ${S.admin?`<div class="adm"><strong>أدوات الإشراف</strong><div class="grid2" style="margin-top:10px">
+    <label>الحالة<select class="inp" id="dSt">${Object.entries(ST).map(([k,n])=>`<option value="${k}"${i.status===k?' selected':''}>${n}</option>`).join('')}</select></label>
+    <label>دمج مع فكرة مشابهة<select class="inp" id="dMg"><option value="">— اختر —</option>${others.map(o=>`<option value="${o.x.k}">${esc(o.x.title)}${o.s>=.5?' (مشابهة)':''}</option>`).join('')}</select></label></div>
+    <div class="act"><button class="btn" data-a="merge">دمج</button><button class="btn danger" data-a="hide">${i.hidden?'إظهار الفكرة':'إخفاء الفكرة (غير ملائمة)'}</button></div></div>`:''}
+  ${i.mine&&!S.admin?`<div class="act"><button class="btn danger" data-a="del">حذف فكرتي</button></div>`:''}`;
+}
+function drawAdd(){
+  let dr={};try{dr=JSON.parse(localStorage.getItem('fq-draft')||'{}')}catch(e){}
+  $('#sb').innerHTML=`<h2>أطلق فكرتك</h2><p class="muted">ما الذي تتمنى رؤيته في كلية البريمي الجامعية مستقبلًا؟</p>
+  <form id="fAdd"><label class="f" for="aT">عنوان مختصر للفكرة</label><input class="inp" id="aT" maxlength="50" required placeholder="مثال: مساحات حديثة للدراسة الجماعية" value="${esc(dr.t||'')}"><div class="cnt" id="aC"></div>
+  <div class="sim" id="sim" hidden></div>
+  <label class="f" for="aD">التفاصيل (اختياري)</label><textarea class="inp" id="aD" maxlength="400" placeholder="اشرح فكرتك وكيف ستفيد الطلبة…">${esc(dr.d||'')}</textarea>
+  <label class="f">المجال</label><div class="catpick">${CATS.map((c,ix)=>`<label><input type="radio" name="cat" value="${c.k}"${(dr.c||'study')===c.k?' checked':''}><span class="tag" style="--c:${c.c};background:none;padding:0"><i></i></span>${c.n}</label>`).join('')}</div>
+  <div class="act" style="margin-top:20px"><button class="btn primary" type="submit" style="flex:1">أطلق الفقاعة</button></div></form>`;
+  upAdd();
+}
+function upAdd(){
+  const t=$('#aT').value,d=$('#aD').value,c=($('#fAdd input[name=cat]:checked')||{}).value;
+  $('#aC').textContent=t.length+' / 50';
+  try{localStorage.setItem('fq-draft',JSON.stringify({t,d,c}))}catch(e){}
+  const sims=t.trim().length<4?[]:D.vis.map(i=>({i,s:simScore(t+' '+d,i.title+' '+i.desc)})).filter(x=>x.s>=.5).sort((a,b)=>b.s-a.s||b.i.votes-a.i.votes).slice(0,3);
+  const box=$('#sim');box.hidden=!sims.length;
+  box.innerHTML=sims.length?`<strong>أفكار مشابهة موجودة — يمكنك تأييدها بدل تكرارها:</strong><ul>${sims.map(x=>`<li><span>${esc(x.i.title)} <small>(${x.i.votes})</small></span><span style="display:flex;gap:6px"><button type="button" class="btn" data-view="${x.i.k}">عرض</button>${x.i.sup?'':`<button type="button" class="btn" data-back="${x.i.k}">أؤيدها</button>`}</span></li>`).join('')}</ul>`:'';
+}
+function submitAdd(e){
+  e.preventDefault();if(!canAct())return;
+  const title=$('#aT').value.trim(),desc=$('#aD').value.trim(),cat=($('#fAdd input[name=cat]:checked')||{}).value||'other';
+  if(title.length<4)return toast('اكتب عنوانًا أوضح (4 أحرف على الأقل).');
+  const mine=S.posts[S.me]?.items||[];if(mine.length>=30)return toast('وصلت إلى الحد الأقصى لعدد الأفكار.');
+  const k=newKey();
+  write('posts/'+S.me,{items:[...mine,{k,title,desc,cat,t:Date.now()}]}).then(()=>write('supports/'+S.me,{ids:[...(S.supports[S.me]?.ids||[]),k]}));
+  try{localStorage.removeItem('fq-draft')}catch(e){}
+  closeSheet();setView('bubbles');U.cat='all';U.q='';$('#q').value='';render();toast('أُطلقت فقاعتك! شارك الرابط ليؤيدها زملاؤك.');
+}
+
+/* ---------- render + events ---------- */
+function render(){
+  derive();renderChips();renderStage();renderSide();
+  if(U.view==='list')renderList();
+  if(U.view==='admin')renderAdmin();
+  $('#admTab').hidden=!S.admin;
+  if(U.sheet==='detail'&&!$('#sheet').contains(document.activeElement)||U.sheet==='detail'&&document.activeElement===$('#x'))drawDetail();
+  const b=$('#banner');
+  if(S.demo){b.hidden=false;b.innerHTML=`<span>معاينة بأمثلة توضيحية — المشاركات في هذا الوضع لا تُحفظ.</span>${S.live?'<button class="btn" data-a="exitdemo">العودة إلى المنصة</button>':''}`}
+  else if(S.slow){b.hidden=false;b.innerHTML='<span>تعذّر الوصول إلى بيانات المنصة حاليًا، قد تكون المعروضة غير محدّثة.</span>'}
+  else b.hidden=true;
+}
+function setView(v){if(v==='admin'&&!S.admin)v='bubbles';U.view=v;$$('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===v));
+  $('#v-bubbles').hidden=v!=='bubbles';$('#v-list').hidden=v!=='list';$('#v-admin').hidden=v!=='admin';$('#chips').style.display=v==='admin'?'none':'';$('.search').style.display=v==='admin'?'none':'';render()}
+$('.tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setView(b.dataset.v)});
+$('#q').addEventListener('input',e=>{U.q=e.target.value;render()});
+$('#sort').addEventListener('change',e=>{U.sort=e.target.value;renderList()});
+$('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b){U.cat=b.dataset.c;render()}});
+$('#addBtn').onclick=()=>openSheet('add');
+$('#scrim').onclick=closeSheet;$('#x').onclick=closeSheet;
+addEventListener('keydown',e=>{if(e.key==='Escape'&&U.sheet)closeSheet()});
+document.addEventListener('click',e=>{
+  const t=e.target;
+  const kEl=t.closest('[data-k]');if(kEl&&!t.closest('#sheet')){e.preventDefault();openSheet('detail',kEl.dataset.k);return}
+  const a=t.closest('[data-a]')?.dataset.a;
+  if(a==='add')openSheet('add');
+  if(a==='demo')enterDemo();
+  if(a==='exitdemo'){S.demo=false;Object.assign(S,real);S.me=real.me;S.admin=real.admin;nodes.forEach(n=>n.el.remove());nodes.clear();setView(U.view)}
+  if(a==='copy'){const txt=report();navigator.clipboard?.writeText(txt).then(()=>toast('نُسخ التقرير.'),()=>{getSelection().selectAllChildren($('#rep'));toast('حدّد النص وانسخه يدويًا.')})}
+  if(a==='sup')toggleSupport(U.k);
+  if(a==='hide'){setMeta(U.k,{hidden:!D.byK[U.k].hidden});toast('تم التحديث.')}
+  if(a==='merge'){const to=$('#dMg').value;if(!to)return toast('اختر فكرة للدمج معها.');setMeta(U.k,{into:to});toast('دُمجت الفكرة، وانتقلت تأييداتها.');U.k=to;drawDetail()}
+  if(a==='del'){const it=(S.posts[S.me]?.items||[]).filter(x=>x.k!==U.k);write('posts/'+S.me,{items:it});closeSheet();toast('حُذفت فكرتك.')}
+  const st=t.closest('[data-hide]');if(st){const k=st.dataset.hide;setMeta(k,{hidden:!D.byK[k].hidden})}
+  const um=t.closest('[data-unmerge]');if(um)setMeta(um.dataset.unmerge,{into:null});
+  const vw=t.closest('[data-view]');if(vw)openSheet('detail',vw.dataset.view);
+  const bk=t.closest('[data-back]');if(bk){const k=bk.dataset.back;closeSheet();if(!D.byK[k].sup)toggleSupport(k)}
+});
+document.addEventListener('change',e=>{
+  if(e.target.id==='dSt'){setMeta(U.k,{status:e.target.value});toast('حُدّثت حالة الفكرة.')}
+  if(e.target.dataset.st)setMeta(e.target.dataset.st,{status:e.target.value});
+  if(e.target.name==='cat')upAdd();
+});
+document.addEventListener('input',e=>{if(e.target.id==='aT'||e.target.id==='aD')upAdd()});
+document.addEventListener('submit',e=>{
+  if(e.target.id==='fAdd')return submitAdd(e);
+  if(e.target.id==='fNote'){e.preventDefault();if(!canAct())return;const v=$('#nT').value.trim();if(v.length<3)return toast('اكتب إضافة أوضح.');
+    const its=S.notes[S.me]?.items||[];if(its.length>=100)return toast('وصلت إلى الحد الأقصى للإضافات.');
+    $('#nT').value='';$('#nT').blur();write('notes/'+S.me,{items:[...its,{k:U.k,text:v,t:Date.now()}]});toast('أُضيف مقترحك.')}
+});
+new ResizeObserver(()=>renderStage()).observe(stage);
+
+/* ---------- demo data (preview only) ---------- */
+function enterDemo(){
+  const ex=[['study','مساحات حديثة للدراسة الجماعية','قاعات مفتوحة بطاولات قابلة لإعادة الترتيب وشاشات عرض ومقابس كهربائية، متاحة حتى المساء.',24,'review'],
+   ['digital','تطبيق موحد للخدمات الطلابية','الجدول والدرجات وحجز المواعيد وطلب الوثائق من مكان واحد على الهاتف النقال.',31,'approved'],
+   ['study','مختبر مفتوح للبرمجة والذكاء الاصطناعي','مختبر بأجهزة حديثة متاح للمشاريع الشخصية والمسابقات خارج أوقات المحاضرات.',21,'new'],
+   ['innov','حاضنة للابتكار وريادة الأعمال','مساحة وإرشاد لتحويل مشاريع التخرج إلى شركات ناشئة.',19,'review'],
+   ['facil','توسعة مواقف السيارات','',17,'new'],['facil','تطوير المرافق الترفيهية','صالة ألعاب واستراحة للطلبة بين المحاضرات.',15,'new'],
+   ['other','منصة للتدريب الميداني والوظائف','ربط الطلبة بجهات التدريب في محافظة البريمي.',14,'new'],['act','دوري رياضي بين التخصصات','',12,'new'],
+   ['facil','مظلات ومقاعد في الساحات الخارجية','',11,'new'],['act','أسبوع ثقافي للتراث العُماني','',9,'done'],
+   ['digital','حجز القاعات والمختبرات إلكترونيًا','',7,'new'],['study','ساعات مكتبية افتراضية مع المحاضرين','',5,'new']];
+  real.posts=S.posts;real.supports=S.supports;real.notes=S.notes;real.meta=S.meta;real.me=S.me;real.admin=S.admin;
+  const P={},SP={},M={},now=Date.now();
+  ex.forEach((e,ix)=>{const k='demo'+ix;P['u'+ix]={items:[{k,title:e[1],desc:e[2],cat:e[0],t:now-ix*36e5*7}]};M[k]={status:e[4],hidden:false,into:null}});
+  for(let u=0;u<34;u++)SP['u'+u]={ids:ex.map((e,ix)=>u<e[3]?'demo'+ix:null).filter(Boolean)};
+  Object.assign(S,{demo:true,posts:P,supports:SP,meta:M,notes:{u3:{items:[{k:'demo0',text:'يا ليت تكون فيها غرف صغيرة قابلة للحجز للمشاريع.',t:now-5e6}]},u5:{items:[{k:'demo1',text:'إضافة إشعارات لمواعيد الاختبارات.',t:now-9e6}]}},me:'me',admin:true});
+  nodes.forEach(n=>n.el.remove());nodes.clear();render();
+}
+
+/* ---------- boot ---------- */
+requestAnimationFrame(step);render();
+(async()=>{
+  const C=window.claude;
+  const [db,user]=C?await Promise.all([C.use('db'),C.use('user')]):[null,null];
+  if(!db){S.loaded=true;enterDemo();return}
+  S.db=db;S.live=true;S.me=user?await user.id():null;S.admin=(await user?.canEdit())??false;
+  const cw=user?await user.can('data.write'):null;if(cw===false)S.canWrite=false;
+  render();
+  const got=new Set(),timer=setTimeout(()=>{S.slow=true;S.loaded=true;render()},10000);
+  ['posts','supports','notes','meta'].forEach(col=>db.collection(col).onSnapshot(s=>{
+    const o={};s.docs.forEach(d=>{if(d.exists)o[d.id]=clean(col,d.data())});
+    if(S.demo)real[col]=o;else S[col]=o;
+    if(!s.metadata.fromCache)got.add(col);
+    if(got.size===4&&!S.loaded){S.loaded=true;S.slow=false;clearTimeout(timer)}
+    if(!S.demo)render();
+  },()=>{got.add(col);if(got.size===4){S.loaded=true;clearTimeout(timer)}render()}));
+})();
+}
+</script>
+</body>
+</html>
