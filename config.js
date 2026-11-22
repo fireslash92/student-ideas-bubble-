@@ -12,5 +12,5 @@ window.FB_CONFIG = {
 // بريد المشرفين (حساب Google) — يرون لوحة الإشراف والتقارير
 // يجب أن يطابق القائمة في firestore.rules
 window.ADMIN_EMAILS = [
-  // "example@gmail.com"
+  "fireslash92@gmail.com"
 ];
