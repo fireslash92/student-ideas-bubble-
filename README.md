@@ -14,12 +14,22 @@
 - تصميم متجاوب يعمل على الهاتف النقال والحاسوب
 
 ## الملفات
-- `index.html` — المنصة كاملة في ملف واحد
-- `logo-wide.jpg` — شعار IT Club
+- `index.html`: المنصة كاملة
+- `config.js`: إعدادات Firebase وبريد المشرفين
+- `firestore.rules`: قواعد حماية قاعدة البيانات
+- `logo-wide.jpg`: شعار IT Club
 
-## ملاحظة عن حفظ البيانات
-تحفظ المنصة المشاركات وتشاركها بين الطلبة عبر قاعدة بيانات Claude Artifacts.
-عند فتحها من خارج Claude (مثل GitHub Pages) تعمل في **وضع المعاينة** بأمثلة توضيحية، ولا تُحفظ المشاركات.
-لتشغيلها مستقلة مع حفظ دائم يلزم ربطها بقاعدة بيانات خارجية (مثل Firebase أو Supabase).
+## تشغيل الحفظ عبر Firebase
+1. أنشئ مشروعًا في [Firebase Console](https://console.firebase.google.com).
+2. **Authentication**: فعّل طريقتي الدخول **Anonymous** و**Google**، ثم أضف `fireslash92.github.io` في Settings ← Authorized domains.
+3. **Firestore Database**: أنشئ قاعدة البيانات، ثم الصق محتوى `firestore.rules` في تبويب Rules بعد وضع بريد المشرفين، واضغط Publish.
+4. من Project settings أضف تطبيق ويب، وانسخ بيانات `firebaseConfig` إلى `config.js`، وأضف بريد المشرفين.
+5. فعّل GitHub Pages من Settings ← Pages ← الفرع main.
+
+- **الطلبة**: يدخلون تلقائيًا بهوية مجهولة دون تسجيل.
+- **المشرف**: يضغط «دخول المشرف» أسفل الصفحة ويسجل بحساب Google.
+- **الروابط**: شاشة العرض `#display`، ومشاركة الفكرة `#add`.
+
+بدون إعدادات Firebase تعمل الصفحة في وضع المعاينة بأمثلة توضيحية.
 
 > حجم الفقاعة يعكس مستوى التأييد، وليس بالضرورة قابلية التنفيذ أو أولوية اعتماد المقترح.

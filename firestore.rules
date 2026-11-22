@@ -1,0 +1,42 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ضع هنا بريد المشرفين نفسه الموجود في config.js
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && request.auth.token.email in ['example@gmail.com'];
+    }
+    function isSelf(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    // أفكار كل طالب في مستند واحد باسمه
+    match /posts/{uid} {
+      allow read: if true;
+      allow write: if isAdmin()
+        || (isSelf(uid) && request.resource.data.items is list && request.resource.data.items.size() <= 30);
+    }
+
+    // تأييدات كل طالب
+    match /supports/{uid} {
+      allow read: if true;
+      allow write: if isAdmin()
+        || (isSelf(uid) && request.resource.data.ids is list && request.resource.data.ids.size() <= 500);
+    }
+
+    // الإضافات والمقترحات على الأفكار
+    match /notes/{uid} {
+      allow read: if true;
+      allow write: if isAdmin()
+        || (isSelf(uid) && request.resource.data.items is list && request.resource.data.items.size() <= 100);
+    }
+
+    // حالة الفكرة، الدمج، الإخفاء — للمشرفين فقط
+    match /meta/{ideaId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

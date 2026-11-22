@@ -150,6 +150,7 @@ body.kiosk .kside{display:flex;position:absolute;z-index:2;left:12px;bottom:12px
 .ktop{display:none}
 @media(max-width:600px){.kbar .live,.kbar img{display:none}}
 .links{display:grid;gap:10px}.links div{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--field);border-radius:14px;padding:10px 14px}.links code{flex:1;direction:ltr;text-align:left;font-size:14px}
+.foot{max-width:1240px;margin:0 auto;padding:0 max(4vw,16px) 28px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--soft);font-size:14px}.foot .btn{min-height:38px;font-size:14px;padding:4px 14px}body.kiosk .foot{display:none!important}
 pre.rep{white-space:pre-wrap;background:var(--field);padding:12px;border-radius:12px;font:14px/1.6 Tajawal}
 @media(max-width:600px){
  .logo{height:52px}.topin{gap:12px}
@@ -197,15 +198,20 @@ pre.rep{white-space:pre-wrap;background:var(--field);padding:12px;border-radius:
   </section>
   <section id="v-admin" hidden></section>
 </main>
+<footer class="foot" id="foot" hidden></footer>
 <div class="scrim" id="scrim" hidden></div>
 <div class="sheet panel" id="sheet" role="dialog" aria-modal="true" hidden><button class="x" id="x" aria-label="إغلاق">×</button><div id="sb"></div></div>
 <div class="toast" id="toast" role="status"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="config.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script>
 {
 const CATS=[{k:'study',n:'الدراسة والتعلم',c:'#ffd166'},{k:'facil',n:'المرافق والترفيه',c:'#7fe3c4'},{k:'digital',n:'الخدمات الرقمية',c:'#c9b8ff'},{k:'innov',n:'الابتكار وريادة الأعمال',c:'#ffa883'},{k:'act',n:'الأنشطة الثقافية والرياضية',c:'#ff9cc4'},{k:'other',n:'أخرى',c:'#e8eef6'}];
-const LINK='https://claude.ai/artifact/Xg6QvsrNLe1zMAEHnafs7N',ADD=LINK+'#add',SHOW=LINK+'#display';
+const LINK=window.claude?'https://claude.ai/artifact/Xg6QvsrNLe1zMAEHnafs7N':location.origin+location.pathname,ADD=LINK+'#add',SHOW=LINK+'#display';
 const CM=Object.fromEntries(CATS.map(c=>[c.k,c]));
 const ST={new:'جديدة',review:'قيد الدراسة',approved:'معتمدة',done:'منفذة'};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
@@ -512,15 +518,46 @@ function enterDemo(){
   nodes.forEach(n=>n.el.remove());nodes.clear();render();
 }
 
+/* ---------- Firebase (GitHub version) ---------- */
+async function fbConnect(){
+  firebase.initializeApp(window.FB_CONFIG);
+  const auth=firebase.auth(),fs=firebase.firestore();
+  await new Promise(r=>{const u=auth.onAuthStateChanged(()=>{u();r()})});
+  if(!auth.currentUser)await auth.signInAnonymously();
+  const mapErr=e=>({code:e?.code==='permission-denied'?'invalid_argument':e?.code==='resource-exhausted'?'quota_exceeded':'unavailable',message:String(e?.message||e)});
+  const ADM=(window.ADMIN_EMAILS||[]).map(s=>String(s).toLowerCase());
+  const isAdm=()=>!!auth.currentUser?.email&&ADM.includes(auth.currentUser.email.toLowerCase());
+  S.fb={auth,isAdm};
+  const db={collection:c=>({onSnapshot:(next,err)=>fs.collection(c).onSnapshot(s=>next({docs:s.docs.map(d=>({id:d.id,exists:true,data:()=>d.data()})),metadata:{fromCache:s.metadata.fromCache}}),e=>err&&err(mapErr(e)))}),
+    doc:p=>({set:d=>fs.doc(p).set(d).catch(e=>{throw mapErr(e)})})};
+  const user={id:async()=>auth.currentUser?.uid||null,canEdit:async()=>isAdm(),can:async()=>true};
+  return [db,user];
+}
+function renderFoot(){
+  const f=$('#foot');if(!S.fb){f.hidden=true;return}f.hidden=false;
+  const em=S.fb.auth.currentUser?.email;
+  f.innerHTML=em?`<span>مسجّل كمشرف: ${esc(em)}${S.admin?'':' (هذا البريد ليس ضمن المشرفين)'}</span><button class="btn" data-a="alogout">خروج المشرف</button>`:'<button class="btn" data-a="alogin">دخول المشرف</button>';
+}
+async function afterAuth(){S.me=S.fb.auth.currentUser?.uid||null;S.admin=S.fb.isAdm();S.canWrite=true;renderFoot();setView(U.view)}
+document.addEventListener('click',async e=>{
+  const a=e.target.closest('[data-a]')?.dataset.a;if(!S.fb)return;
+  if(a==='alogin'){const p=new firebase.auth.GoogleAuthProvider();
+    try{await S.fb.auth.signInWithPopup(p);await afterAuth();toast(S.admin?'مرحبًا بك في لوحة الإشراف.':'هذا البريد ليس ضمن المشرفين.')}
+    catch(err){if(err?.code==='auth/popup-blocked'||err?.code==='auth/operation-not-supported-in-this-environment')S.fb.auth.signInWithRedirect(p);else toast('تعذّر تسجيل الدخول.')}}
+  if(a==='alogout'){await S.fb.auth.signOut();await S.fb.auth.signInAnonymously();await afterAuth();toast('تم تسجيل الخروج.')}
+});
+
 /* ---------- boot ---------- */
 requestAnimationFrame(step);route();
 (async()=>{
   const C=window.claude;
-  const [db,user]=C?await Promise.all([C.use('db'),C.use('user')]):[null,null];
+  let db=null,user=null;
+  if(C)[db,user]=await Promise.all([C.use('db'),C.use('user')]);
+  else if(window.FB_CONFIG?.apiKey&&window.firebase){try{[db,user]=await fbConnect()}catch(e){console.error(e);toast('تعذّر الاتصال بقاعدة البيانات.')}}
   if(!db){S.loaded=true;enterDemo();return}
   S.db=db;S.live=true;S.me=user?await user.id():null;S.admin=(await user?.canEdit())??false;
   const cw=user?await user.can('data.write'):null;if(cw===false)S.canWrite=false;
-  render();
+  renderFoot();render();
   const got=new Set(),timer=setTimeout(()=>{S.slow=true;S.loaded=true;render()},10000);
   ['posts','supports','notes','meta'].forEach(col=>db.collection(col).onSnapshot(s=>{
     const o={};s.docs.forEach(d=>{if(d.exists)o[d.id]=clean(col,d.data())});
