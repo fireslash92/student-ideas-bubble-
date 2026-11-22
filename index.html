@@ -12,51 +12,60 @@
    PICTURE: a stage of floating ideas; each bubble has a double white outline like the logo letters
    COLOUR and TYPE: logo blue #477ab3 field, white lines, soft category fills; Reem Kufi + Tajawal
    LAYOUT: header band = logo, tools row, stage with ranking beside it; sheets for add/detail */
-:root{color-scheme:light dark;--bg:light-dark(#477ab3,#0e2136);--bg2:light-dark(#3d6ba1,#0a192a);--ink:#fff;--soft:rgba(255,255,255,.8);--line:rgba(255,255,255,.9);
+:root{color-scheme:light dark;--bg:light-dark(#3b6a9f,#0e2136);--bg2:light-dark(#33608f,#0a192a);--ink:#fff;--soft:light-dark(#e3ecf6,#c9d8e8);--max:1240px;--pad:max(16px,4vw,env(safe-area-inset-left),env(safe-area-inset-right));--line:rgba(255,255,255,.9);
 --panel:light-dark(#fff,#142d4a);--pink:light-dark(#11263f,#e8f1fb);--mut:light-dark(#566a80,#9db3cb);--edge:light-dark(#dce5ef,#244466);--field:light-dark(#f3f6fa,#0f243c);--acc:#ffd166}
 :root[data-theme=light]{color-scheme:light}:root[data-theme=dark]{color-scheme:dark}
 *{box-sizing:border-box;min-width:0}
 [hidden]{display:none!important}
+html{scroll-padding-top:16px;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+.skip{position:absolute;inset-inline-start:12px;top:-60px;z-index:40;background:#fff;color:#10253d;padding:10px 16px;border-radius:10px;font-weight:700;text-decoration:none}
+.skip:focus{top:12px}
+body.locked{overflow:hidden}
 body{margin:0;background:var(--bg2);color:var(--ink);font:16px/1.6 Tajawal,"Segoe UI",Tahoma,sans-serif;overflow-x:clip}
 button,input,textarea,select{font:inherit}
 :focus-visible{outline:3px solid var(--acc);outline-offset:2px}
-.top{background:var(--bg);padding:max(14px,env(safe-area-inset-top)) max(4vw,16px) 0}
-.topin{max-width:1240px;margin:auto;display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding-bottom:16px;border-bottom:4px solid var(--line)}
-.logo{height:72px;width:auto;display:block;border-radius:8px}
+.panel :focus-visible,.sec :focus-visible{outline-color:#2f64a0}
+.top{background:var(--bg);padding:max(14px,env(safe-area-inset-top)) var(--pad) 0}
+.topin{max-width:var(--max);margin:auto;display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding-bottom:16px;border-bottom:4px solid var(--line)}
+.logo{height:72px;width:auto;display:block;border-radius:12px;box-shadow:0 0 0 2px rgba(255,255,255,.55)}
 :root[data-theme=dark] .logo{outline:1px solid rgba(255,255,255,.25)}
 @media(prefers-color-scheme:dark){:root:not([data-theme=light]) .logo{outline:1px solid rgba(255,255,255,.25)}}
 .brand{flex:1 1 260px}
 h1{font:700 clamp(28px,4.4vw,44px)/1.1 "Reem Kufi",Tajawal,sans-serif;margin:0;text-wrap:balance}
 .brand p{margin:4px 0 0;color:var(--soft)}
 .btn{min-height:44px;padding:8px 18px;border-radius:999px;border:2px solid var(--line);background:transparent;color:inherit;font-weight:700;cursor:pointer;white-space:nowrap}
-.btn:hover{background:rgba(255,255,255,.12)}
+a.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+@media(hover:hover){.btn:hover{background:rgba(255,255,255,.12)}}
 .primary{background:#fff;color:#18406d;border-color:#fff}.primary:hover{background:#eaf2fb}
 .panel .btn,.sec .btn{border-color:var(--edge);color:var(--pink)}.panel .btn:hover,.sec .btn:hover{background:var(--field)}
 .panel .primary,.sec .primary{background:#2f64a0;border-color:#2f64a0;color:#fff}.panel .primary:hover,.sec .primary:hover{background:#25578f}
 .panel .primary.on{background:#1f8a64;border-color:#1f8a64}
-.banner{max-width:1240px;margin:12px auto 0;padding:10px 16px;border-radius:14px;background:rgba(255,209,102,.16);border:1px solid rgba(255,209,102,.6);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.banner{max-width:var(--max);margin:12px auto 0;padding:10px 16px;border-radius:14px;background:rgba(255,209,102,.16);border:1px solid rgba(255,209,102,.6);display:flex;gap:12px;align-items:center;flex-wrap:wrap}
 .banner .btn{min-height:36px;padding:4px 14px;font-size:14px}
-.tools{max-width:1240px;margin:auto;padding:16px max(4vw,16px) 8px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.tools{max-width:var(--max);margin:auto;padding:16px var(--pad) 8px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .tabs{display:flex;gap:4px;background:rgba(255,255,255,.1);border-radius:999px;padding:4px}
-.tabs button{min-height:40px;padding:6px 16px;border:0;border-radius:999px;background:transparent;color:var(--ink);font-weight:700;cursor:pointer;white-space:nowrap}
+.tabs button{min-height:44px;padding:6px 16px;border:0;border-radius:999px;background:transparent;color:var(--ink);font-weight:700;cursor:pointer;white-space:nowrap}
 .tabs button[aria-selected=true]{background:#fff;color:#18406d}
-.search{flex:1 1 220px;position:relative}
-.search input{width:100%;min-height:44px;border-radius:999px;border:2px solid rgba(255,255,255,.55);background:rgba(255,255,255,.1);color:#fff;padding:8px 18px;font-size:16px}
-.search input::placeholder{color:rgba(255,255,255,.7)}
-.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 8px;width:100%;scrollbar-width:thin}
-.chip{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:38px;padding:4px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,.45);background:transparent;color:#fff;cursor:pointer;font-size:15px;white-space:nowrap}
+.search{flex:1 1 160px;position:relative}
+.search input{width:100%;min-height:44px;border-radius:999px;border:2px solid rgba(255,255,255,.85);background:rgba(255,255,255,.1);color:#fff;padding:8px 18px;font-size:16px}
+.search input::placeholder{color:var(--soft);opacity:1}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 4px 10px;width:100%;scrollbar-width:thin;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
+.chips>*{scroll-snap-align:start}
+.chip{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:44px;padding:4px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,.8);background:transparent;color:#fff;cursor:pointer;font-size:15px;white-space:nowrap}
 .chip i{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 2px #fff}
-.chip small{opacity:.75}
+.chip small{font-weight:700}
 .chip[aria-pressed=true]{background:#fff;color:#18406d;border-color:#fff}
-.wrap{max-width:1240px;margin:auto;padding:4px max(4vw,16px) 40px}
+.wrap{max-width:var(--max);margin:auto;padding:4px var(--pad) 40px}
 .grid{display:grid;grid-template-columns:minmax(0,1fr);gap:20px}
 @media(min-width:960px){.grid{grid-template-columns:minmax(0,1fr) 310px}}
-.stage{position:relative;height:clamp(400px,64vh,720px);border-radius:28px;overflow:hidden;border:2px solid rgba(255,255,255,.55);
+.stage{position:relative;height:clamp(320px,64vh,760px);height:clamp(320px,64dvh,760px);border-radius:28px;overflow:hidden;border:2px solid rgba(255,255,255,.55);
 background:radial-gradient(120% 90% at 50% 40%,rgba(255,255,255,.14),transparent 70%),repeating-linear-gradient(0deg,rgba(255,255,255,.05) 0 1px,transparent 1px 36px),repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 36px),var(--bg);touch-action:pan-y}
 .bub{position:absolute;left:0;top:0;border-radius:50%;padding:0;border:3px solid #fff;outline:1.5px solid rgba(255,255,255,.85);outline-offset:3px;cursor:pointer;color:#10253d;
 background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.75) 0,rgba(255,255,255,0) 38%),var(--c);box-shadow:0 10px 24px rgba(8,25,50,.28),inset 0 -8px 16px rgba(0,0,0,.08);will-change:transform;font-size:calc(var(--r,40) * .2px)}
 .bub .in{display:grid;place-content:center;justify-items:center;height:100%;padding:0 14%;text-align:center;gap:2px;transition:transform .2s}
-.bub:hover .in{transform:scale(1.05)}
+@media(hover:hover){.bub:hover .in{transform:scale(1.05)}}
+.bub:focus-visible{outline:4px solid var(--acc);outline-offset:5px;z-index:4}
 .bub b{font-weight:800;line-height:1.2;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:max(11px,1em)}
 .bub .v{font-size:max(11px,.85em);font-weight:700;opacity:.8;white-space:nowrap}
 .bub .s{font-size:max(10px,.7em);background:rgba(16,37,61,.12);border-radius:99px;padding:0 8px;white-space:nowrap}
@@ -69,7 +78,11 @@ background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.75) 0,rgba(255,25
 .plus{position:absolute;z-index:3;direction:ltr;pointer-events:none;font:800 24px/1 Tajawal,sans-serif;color:#fff;text-shadow:0 2px 10px rgba(6,20,40,.5);transform:translate(-50%,-50%);animation:plus 1.25s ease-out forwards}
 @keyframes plus{0%{opacity:0;margin-top:0}15%{opacity:1}100%{opacity:0;margin-top:-56px}}
 @keyframes pop{from{opacity:0}to{opacity:1}}
+@media(forced-colors:active){.bub{border:3px solid CanvasText;outline-color:CanvasText}.bar span{background:Highlight}}
 @media(prefers-reduced-motion:reduce){.bub.pop{animation:none}.bub.grow::after,.plus{display:none}.bub .in{transition:none}}
+.pause{position:absolute;z-index:3;top:10px;inset-inline-end:10px;min-height:40px;padding:4px 14px;border-radius:999px;border:1.5px solid rgba(255,255,255,.85);background:rgba(16,37,61,.55);color:#fff;font-weight:700;font-size:14px;cursor:pointer;backdrop-filter:blur(4px)}
+.pause:hover{background:rgba(16,37,61,.75)}
+body.kiosk .pause{opacity:.55}body.kiosk .pause:focus-visible,body.kiosk .pause:hover{opacity:1}
 .empty{position:absolute;inset:0;display:grid;place-content:center;justify-items:center;text-align:center;gap:12px;padding:24px}
 .empty h2{font:700 26px/1.2 "Reem Kufi",Tajawal;margin:0}
 .empty p{margin:0;color:var(--soft)}
@@ -78,16 +91,22 @@ background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.75) 0,rgba(255,25
 .side{background:rgba(255,255,255,.08);border:1.5px solid rgba(255,255,255,.3);border-radius:24px;padding:18px 18px 10px;align-self:start}
 .side h2,.sec h2{font:700 20px/1.3 "Reem Kufi",Tajawal;margin:0 0 10px}
 .rank{list-style:none;margin:0;padding:0}
-.rank li{display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.18);cursor:pointer}
+.rank li{border-bottom:1px solid rgba(255,255,255,.22);break-inside:avoid}
+.rank button{all:unset;box-sizing:border-box;width:100%;display:grid;grid-template-columns:28px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 4px;min-height:44px;cursor:pointer;border-radius:10px}
+.rank button:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+@media(hover:hover){.rank button:hover{background:rgba(255,255,255,.08)}}
 .rank li:last-child{border:0}
 .rank .n{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-weight:800;font-size:14px;background:var(--c);color:#10253d}
-.rank .tt{font-weight:700;line-height:1.3}
+.rank .tt{font-weight:700;line-height:1.3;display:block}.rank .bar{display:block}
 .rank .vv{font-weight:800;font-variant-numeric:tabular-nums}
 .bar{height:6px;border-radius:9px;background:rgba(255,255,255,.18);margin-top:5px;overflow:hidden}.bar span{display:block;height:100%;background:var(--c,#fff);border-radius:9px}
 .stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:14px;padding-top:12px;border-top:1.5px solid rgba(255,255,255,.3)}
 .stats div{text-align:center}.stats b{display:block;font-size:24px;line-height:1.1}.stats span{font-size:13px;color:var(--soft)}
 .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:14px}
-.card{background:var(--panel);color:var(--pink);border-radius:20px;padding:16px;border-top:6px solid var(--c);cursor:pointer;text-align:start;border-inline:0;border-bottom:0;display:flex;flex-direction:column;gap:6px}
+.card{position:relative;background:var(--panel);color:var(--pink);border-radius:20px;padding:16px;border-top:6px solid var(--c);display:flex;flex-direction:column;gap:6px}
+.card .open{all:unset;cursor:pointer}.card .open::after{content:'';position:absolute;inset:0;border-radius:20px}
+.card:has(.open:focus-visible){outline:3px solid var(--acc);outline-offset:3px}
+@media(hover:hover){.card:hover{box-shadow:0 8px 24px rgba(6,20,40,.25)}}
 .card h3{margin:0;font-size:18px;line-height:1.3}.card p{margin:0;color:var(--mut);font-size:15px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .meta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:14px}
 .tag{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:99px;background:var(--field);color:var(--pink);font-size:13px;font-weight:700;white-space:nowrap}
@@ -97,21 +116,25 @@ background:radial-gradient(circle at 32% 26%,rgba(255,255,255,.75) 0,rgba(255,25
 .listbar select{min-height:44px;border-radius:12px;padding:6px 12px;font-size:16px}
 .scrim{position:fixed;inset:0;background:rgba(6,18,34,.5);z-index:20}
 .panel{background:var(--panel);color:var(--pink)}
-.sheet{position:fixed;z-index:21;inset-inline:0;bottom:0;max-height:90vh;overflow:auto;border-radius:24px 24px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(0,0,0,.3)}
-@media(min-width:720px){.sheet{inset:auto;top:50%;left:50%;transform:translate(-50%,-50%);width:min(580px,92vw);max-height:86vh;border-radius:24px;bottom:auto}}
+.sheet{position:fixed;z-index:21;inset-inline:0;bottom:0;max-height:90vh;max-height:90dvh;overflow:auto;overscroll-behavior:contain;border-radius:24px 24px 0 0;padding:22px 20px calc(22px + env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(0,0,0,.3)}
+@media(min-width:720px){.sheet{inset:auto;top:50%;left:50%;transform:translate(-50%,-50%);width:min(580px,92vw);max-height:86vh;max-height:86dvh;border-radius:24px;bottom:auto}}
 .x{position:sticky;top:0;float:left;width:44px;height:44px;border-radius:50%;border:0;background:var(--field);color:var(--pink);font-size:24px;cursor:pointer;line-height:1}
 .sheet h2{font:700 26px/1.25 "Reem Kufi",Tajawal;margin:10px 0 8px;text-wrap:balance}
 .sheet h3{font-size:17px;margin:20px 0 8px}
 .muted{color:var(--mut);font-size:14px}
 .vote{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px;border-radius:16px;background:var(--field);margin:14px 0}
 .vote strong{font-size:34px;line-height:1}.vote .grow{flex:1}
-label.f{display:block;font-weight:700;margin:14px 0 6px}
+label.f,legend.f{display:block;font-weight:700;margin:14px 0 6px;padding:0}
+fieldset{border:0;margin:0;padding:0;min-width:0}
+.err{color:#b3261e;font-weight:700;font-size:14px;margin:6px 0 0}
+.inp[aria-invalid=true]{border-color:#b3261e;border-width:2px}
 .inp{width:100%;min-height:46px;border-radius:12px;border:1.5px solid var(--edge);background:var(--field);color:var(--pink);padding:10px 14px;font-size:16px}
 textarea.inp{min-height:96px;resize:vertical}
 .cnt{font-size:13px;color:var(--mut);text-align:left}
 .catpick{display:flex;flex-wrap:wrap;gap:8px}
 .catpick label{display:inline-flex;gap:8px;align-items:center;min-height:42px;padding:4px 14px;border-radius:99px;border:1.5px solid var(--edge);cursor:pointer;font-size:15px}
-.catpick input{accent-color:#2f64a0;width:18px;height:18px;margin:0}
+.catpick input{accent-color:#2f64a0;width:20px;height:20px;margin:0}
+.catpick label:has(input:focus-visible){outline:3px solid #2f64a0;outline-offset:2px}
 .catpick label:has(input:checked){border-color:#2f64a0;background:var(--field);font-weight:700}
 .sim{margin-top:14px;border-radius:14px;padding:12px 14px;background:#fff6dc;color:#4d3a00}
 .sim[hidden]{display:none}
@@ -128,12 +151,12 @@ textarea.inp{min-height:96px;resize:vertical}
 .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:12px}
 .kpis div{background:var(--field);border-radius:16px;padding:14px}.kpis b{display:block;font-size:clamp(28px,4vw,38px);line-height:1.1}.kpis span{color:var(--mut);font-size:14px}
 .two{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:18px}
-.hrow{display:grid;grid-template-columns:minmax(0,9em) minmax(0,1fr) 4.5em;gap:10px;align-items:center;padding:6px 0;font-size:15px}
+.hrow{display:grid;grid-template-columns:minmax(0,9em) minmax(0,1fr) auto;gap:10px;align-items:center;padding:6px 0;font-size:15px}
 .hrow .bar{height:12px;background:var(--field);margin:0}.hrow .num{text-align:left;font-variant-numeric:tabular-nums;white-space:nowrap}
 table{width:100%;border-collapse:collapse;font-size:15px}th,td{text-align:start;padding:10px 8px;border-bottom:1px solid var(--edge);vertical-align:middle}th{color:var(--mut);font-weight:700;font-size:13px}
 td.num{text-align:left;font-variant-numeric:tabular-nums}
-td select{min-height:40px;border-radius:10px;padding:4px 8px;font-size:15px}
-td .btn{min-height:38px;padding:4px 12px;font-size:14px}
+td select{min-height:44px;border-radius:10px;padding:4px 8px;font-size:15px}
+td .btn{min-height:44px;padding:4px 12px;font-size:14px}
 .toast{position:fixed;z-index:30;bottom:calc(96px + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);background:#10253d;color:#fff;padding:12px 20px;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,.3);max-width:90vw;opacity:0;pointer-events:none;transition:opacity .25s}
 .toast.on{opacity:1}
 .kbar,.kside{display:none}
@@ -142,7 +165,7 @@ body.kiosk .top,body.kiosk .tools,body.kiosk .side,body.kiosk .note,body.kiosk #
 body.kiosk .kbar{display:flex;align-items:center;gap:16px;padding:8px 16px;flex:none;height:64px}
 .kbar img{height:44px}.kbar h1{flex:1;font-size:clamp(20px,2.6vw,38px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .kbar .live{display:flex;gap:18px}.kbar .live b{font-size:clamp(18px,2vw,30px);display:block;line-height:1}.kbar .live span{color:var(--soft);font-size:12px}
-.kbar .ctl{display:flex;gap:6px;opacity:.5}.kbar .ctl:hover{opacity:1}.kbar .ctl .btn{min-height:34px;font-size:13px;padding:2px 12px}
+.kbar .ctl{display:flex;gap:6px}.kbar .ctl .btn{min-height:40px;font-size:14px;padding:2px 14px;border-color:rgba(255,255,255,.6)}
 body.kiosk main.wrap{flex:1;min-height:0;max-width:none;width:100%;padding:0 12px 12px}
 body.kiosk #v-bubbles{height:100%;grid-template-columns:minmax(0,1fr)!important}
 body.kiosk #v-bubbles>div:first-child{height:100%;min-height:0}
@@ -154,59 +177,72 @@ body.kiosk .kside{display:flex;position:absolute;z-index:2;left:12px;bottom:12px
 .klink{display:none}
 .ktop{display:none}
 @media(max-width:600px){.kbar .live,.kbar img{display:none}}
-.links{display:grid;gap:10px}.links div{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--field);border-radius:14px;padding:10px 14px}.links code{flex:1;direction:ltr;text-align:left;font-size:14px}
-.foot{max-width:1240px;margin:0 auto;padding:0 max(4vw,16px) 28px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--soft);font-size:14px}.foot .btn{min-height:38px;font-size:14px;padding:4px 14px}body.kiosk .foot{display:none!important}
+.linkbtn{all:unset;cursor:pointer;font-weight:700;text-decoration:underline;text-underline-offset:3px}.linkbtn:focus-visible{outline:3px solid #2f64a0;outline-offset:2px}
+.links{display:grid;gap:10px}.links div{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--field);border-radius:14px;padding:10px 14px}.links code{flex:1 1 220px;direction:ltr;text-align:left;font-size:14px;word-break:break-all}
+.foot{max-width:var(--max);margin:0 auto;padding:0 var(--pad) 28px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;color:var(--soft);font-size:14px}.foot .btn{min-height:44px;font-size:14px;padding:4px 14px}body.kiosk .foot{display:none!important}
 pre.rep{white-space:pre-wrap;background:var(--field);padding:12px;border-radius:12px;font:14px/1.6 Tajawal}
+@media(min-width:1600px){:root{--max:1480px}.stage{height:clamp(420px,70dvh,860px)}}
+@media(min-width:600px) and (max-width:959px){.rank{columns:2;column-gap:28px}}
+@media(max-height:520px) and (orientation:landscape){
+ .logo{height:40px}h1{font-size:24px}.brand p{font-size:14px}.topin{padding-bottom:10px;gap:12px}.tools{padding-top:10px}
+ .stage{height:calc(100dvh - 24px);min-height:260px}
+}
 @media(max-width:600px){
+ html{scroll-padding-bottom:100px}
  .logo{height:52px}.topin{gap:12px}
  #addBtn{position:fixed;z-index:15;bottom:calc(14px + env(safe-area-inset-bottom));inset-inline:16px;min-height:54px;font-size:18px;box-shadow:0 10px 30px rgba(6,20,40,.45)}
- body{padding-bottom:90px}.tabs{width:100%}.tabs button{flex:1;padding:6px 8px}
- .stage{height:clamp(380px,62vh,620px);border-radius:22px}
+ body{padding-bottom:calc(90px + env(safe-area-inset-bottom))}.tabs{width:100%}.tabs button{flex:1;padding:6px 8px;font-size:15px}
+ .tools{gap:10px}.tools>.btn{flex:none}
+ .stage{height:clamp(340px,60vh,620px);height:clamp(340px,60dvh,620px);border-radius:22px}
+ .sheet h2{font-size:22px}
  table{font-size:14px}.stack thead{display:none}.stack tr{display:grid;padding-block:10px;border-bottom:1px solid var(--edge)}.stack td{display:flow-root;border:0;padding:3px 0;padding-inline-start:6.5em;text-align:start}.stack td::before{content:attr(data-l);float:inline-start;width:6em;margin-inline-start:-6.5em;color:var(--mut);font-size:13px}.stack td:empty{display:none}
 }
 </style>
 <script>new MutationObserver(()=>{for(const c of document.querySelectorAll('.stack td:not([data-l])')){let i=0,p=c;while(p=p.previousElementSibling)i+=p.colSpan;c.dataset.l=c.closest('table').rows[0].cells[i]?.textContent||''}}).observe(document,{childList:true,subtree:true})</script>
 </head>
 <body>
+<a class="skip" href="#main">تخطَّ إلى المحتوى</a>
 <header class="top"><div class="topin">
-  <img class="logo" src="logo-wide.jpg" alt="IT Club — Al Buraimi University College">
+  <img class="logo" src="logo-wide.jpg" alt="شعار نادي تقنية المعلومات IT Club — كلية البريمي الجامعية" width="640" height="280">
   <div class="brand"><h1>فقاعة أفكار الطلاب</h1><p>مساحة تفاعلية لاستشراف مستقبل كلية البريمي الجامعية</p></div>
-  <button class="btn primary" id="addBtn">+ أضف فكرتك</button>
+  <button class="btn primary" id="addBtn" aria-haspopup="dialog">+ أضف فكرتك</button>
 </div>
-<div class="banner" id="banner" hidden></div>
+<div class="banner" id="banner" role="status" hidden></div>
 </header>
-<div class="kbar"><img src="logo-wide.jpg" alt="IT Club"><h1>فقاعة أفكار الطلاب</h1>
+<div class="kbar"><img src="logo-wide.jpg" alt="شعار IT Club"><h1 aria-hidden="true">فقاعة أفكار الطلاب</h1>
   <div class="live" id="klive"></div>
   <div class="ctl"><button class="btn" data-a="fs">ملء الشاشة</button><a class="btn" href="#">خروج</a></div></div>
-<nav class="tools">
-  <div class="tabs" role="tablist">
-    <button role="tab" data-v="bubbles" aria-selected="true">الفقاعات</button>
-    <button role="tab" data-v="list" aria-selected="false">قائمة الأفكار</button>
-    <button role="tab" data-v="admin" aria-selected="false" id="admTab" hidden>لوحة الإشراف</button>
+<nav class="tools" aria-label="عرض الأفكار والبحث">
+  <div class="tabs" role="tablist" aria-label="طريقة العرض">
+    <button role="tab" id="t-bubbles" data-v="bubbles" aria-selected="true" aria-controls="v-bubbles">الفقاعات</button>
+    <button role="tab" id="t-list" data-v="list" aria-selected="false" aria-controls="v-list" tabindex="-1">قائمة الأفكار</button>
+    <button role="tab" id="admTab" data-v="admin" aria-selected="false" aria-controls="v-admin" tabindex="-1" hidden>لوحة الإشراف</button>
   </div>
-  <div class="search"><input id="q" type="search" placeholder="ابحث عن فكرة…" aria-label="البحث عن الأفكار"></div>
+  <div class="search" role="search"><label for="q" class="sr">البحث عن الأفكار</label><input id="q" type="search" placeholder="ابحث عن فكرة…" autocomplete="off" enterkeyhint="search"></div>
   <a class="btn" href="#display">شاشة العرض</a>
-  <div class="chips" id="chips"></div>
+  <div class="chips" id="chips" role="group" aria-label="تصفية حسب المجال"></div>
 </nav>
-<main class="wrap">
-  <section id="v-bubbles" class="grid">
+<main class="wrap" id="main" tabindex="-1">
+  <section id="v-bubbles" class="grid" role="tabpanel" aria-labelledby="t-bubbles">
     <div>
-      <div class="stage" id="stage"><div class="empty" id="empty" hidden></div><aside class="kside" id="kside"><h2>شارك بفكرتك</h2><div class="qr" id="qr"></div><p>امسح الرمز بهاتفك النقال</p><div class="klink" id="klink"></div><ol class="ktop" id="ktop"></ol></aside></div>
-      <p class="note">حجم الفقاعة يعكس مستوى التأييد، وليس بالضرورة قابلية تنفيذ الفكرة أو أولوية اعتمادها. اضغط على أي فقاعة لعرض تفاصيلها وتأييدها.</p>
+      <h2 class="sr">فقاعات الأفكار</h2>
+      <div class="stage" id="stage" role="region" aria-label="فقاعات الأفكار" aria-describedby="stageHelp"><button class="pause" id="pause" aria-pressed="false">إيقاف الحركة</button><div class="empty" id="empty" hidden></div><aside class="kside" id="kside" aria-label="شارك بفكرتك"><h2>شارك بفكرتك</h2><div class="qr" id="qr" role="img" aria-label="رمز QR يفتح نموذج إضافة فكرة"></div><p>امسح الرمز بهاتفك النقال</p><div class="klink" id="klink"></div><ol class="ktop" id="ktop"></ol></aside></div>
+      <p class="note" id="stageHelp">حجم الفقاعة يعكس مستوى التأييد، وليس بالضرورة قابلية تنفيذ الفكرة أو أولوية اعتمادها. اضغط على أي فقاعة لعرض تفاصيلها وتأييدها، أو استخدم «قائمة الأفكار» لعرضها مرتبة.</p>
     </div>
-    <aside class="side"><h2>الأكثر تأييدًا</h2><ol class="rank" id="top"></ol><div class="stats" id="stats"></div></aside>
+    <aside class="side" aria-labelledby="topH"><h2 id="topH">الأكثر تأييدًا</h2><ol class="rank" id="top"></ol><div class="stats" id="stats"></div></aside>
   </section>
-  <section id="v-list" hidden>
-    <div class="listbar"><strong id="lcount"></strong>
-      <select id="sort" aria-label="الترتيب"><option value="votes">الأكثر تأييدًا</option><option value="new">الأحدث</option></select></div>
+  <section id="v-list" role="tabpanel" aria-labelledby="t-list" hidden>
+    <h2 class="sr">قائمة الأفكار</h2>
+    <div class="listbar"><strong id="lcount" aria-live="polite"></strong>
+      <label for="sort" class="sr">ترتيب الأفكار</label><select id="sort"><option value="votes">الأكثر تأييدًا</option><option value="new">الأحدث</option></select></div>
     <div class="cards" id="cards"></div>
   </section>
-  <section id="v-admin" hidden></section>
+  <section id="v-admin" role="tabpanel" aria-labelledby="admTab" hidden></section>
 </main>
 <footer class="foot" id="foot" hidden></footer>
 <div class="scrim" id="scrim" hidden></div>
-<div class="sheet panel" id="sheet" role="dialog" aria-modal="true" hidden><button class="x" id="x" aria-label="إغلاق">×</button><div id="sb"></div></div>
-<div class="toast" id="toast" role="status"></div>
+<div class="sheet panel" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" hidden><button class="x" id="x" aria-label="إغلاق">×</button><div id="sb"></div></div>
+<div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="config.js"></script>
@@ -222,6 +258,8 @@ const ST={new:'جديدة',review:'قيد الدراسة',approved:'معتمدة
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+let paused=RM;try{const v=localStorage.getItem('fq-paused');if(v!==null)paused=v==='1'}catch(e){}
+let stageVisible=true;
 const S={posts:{},supports:{},notes:{},meta:{},me:null,admin:false,canWrite:true,demo:false,live:false,db:null};
 const real={};
 const U={view:'bubbles',cat:'all',q:'',sort:'votes',sheet:null,k:null};
@@ -234,7 +272,7 @@ const norm=s=>String(s).replace(/[ً-ْـ]/g,'').replace(/[أإآ]/g,'ا').repla
 const STOP=new Set(['في','من','علي','الي','عن','مع','هذا','هذه','ذلك','التي','الذي','او','ثم','كل','بين','جديد','جديده','انشاء','توفير','تطوير','اضافه','عمل']);
 const toks=s=>[...new Set(norm(s).split(/[^\p{L}\p{N}]+/u).map(w=>w.replace(/^(وال|بال|كال|فال|لل|ال)/,'')).map(w=>w.length>4?w.replace(/(ات|ين|ون|يه|ه)$/,''):w).filter(w=>w.length>2&&!STOP.has(w)))];
 const simScore=(a,b)=>{const A=toks(a),B=new Set(toks(b));if(!A.length||!B.size)return 0;let n=0;A.forEach(w=>B.has(w)&&n++);return n/Math.min(A.length,B.size)};
-let tt;const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),2800)};
+let tt;const toast=m=>{const t=$('#toast');t.textContent='';requestAnimationFrame(()=>{t.textContent=m});t.classList.add('on');clearTimeout(tt);tt=setTimeout(()=>t.classList.remove('on'),4200)};
 const newKey=()=>'i'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);
 
 /* ---------- data shaping ---------- */
@@ -303,8 +341,8 @@ function renderStage(){
     const key=[i.title,i.votes,i.status,i.sup,i.cat].join('|');
     if(n.key!==key){n.key=key;const c=CM[i.cat];
       n.el.style.setProperty('--c',c.c);n.el.classList.toggle('me',i.sup);
-      n.el.setAttribute('aria-label',i.title+'، '+supLabel(i.votes)+'، '+c.n);
-      n.el.innerHTML=`<span class="in"><b>${esc(i.title)}</b><span class="v">${i.votes} ♥</span>${i.status!=='new'?`<span class="s">${ST[i.status]}</span>`:''}</span>`}
+      n.el.setAttribute('aria-label',i.title+'، '+supLabel(i.votes)+'، '+c.n+(i.status!=='new'?'، '+ST[i.status]:'')+(i.sup?'، تؤيدها':''));n.el.setAttribute('aria-haspopup','dialog');
+      n.el.innerHTML=`<span class="in" aria-hidden="true"><b>${esc(i.title)}</b><span class="v">${i.votes} ♥</span>${i.status!=='new'?`<span class="s">${ST[i.status]}</span>`:''}</span>`}
     if(n.v!=null&&i.votes>n.v)pulse(n,i.votes-n.v);
     n.v=i.votes;n.el.classList.toggle('lead',lead===i);
     n.el.classList.toggle('sm',n.tr<46);
@@ -317,25 +355,25 @@ function renderStage(){
   else e.hidden=true;
 }
 function pulse(n,d){
-  if(RM)return;n.rv=(n.rv||0)+Math.min(14,4+d*3);
+  if(RM||paused)return;n.rv=(n.rv||0)+Math.min(14,4+d*3);
   n.el.classList.remove('grow');void n.el.offsetWidth;n.el.classList.add('grow');
   const p=document.createElement('span');p.className='plus';p.textContent='+'+d;
   p.style.left=n.x+'px';p.style.top=(n.y-n.r)+'px';stage.appendChild(p);setTimeout(()=>p.remove(),1300);
   setTimeout(()=>n.el.classList.remove('grow'),1000);
 }
 function step(t){
-  if(U.view==='bubbles'&&nodes.size){
+  if(U.view==='bubbles'&&nodes.size&&stageVisible&&!document.hidden){
     const W=stage.clientWidth,H=stage.clientHeight,a=[...nodes.values()];
     for(const n of a){if(RM)n.r=n.tr;else{n.rv=(n.rv||0)*.84+(n.tr-n.r)*.05;n.r=Math.max(4,n.r+n.rv)}
-      if(!RM){n.vx+=Math.sin(t/1800+n.ph)*.014;n.vy+=Math.cos(t/2300+n.ph*1.3)*.014}
+      if(!paused){n.vx+=Math.sin(t/1800+n.ph)*.014;n.vy+=Math.cos(t/2300+n.ph*1.3)*.014}
       n.vx+=(W/2-n.x)*.00010;n.vy+=(H/2-n.y)*.00016}
     for(let i=0;i<a.length;i++)for(let j=i+1;j<a.length;j++){const p=a[i],q=a[j];let dx=q.x-p.x,dy=q.y-p.y,d=Math.hypot(dx,dy)||.01;const m=p.r+q.r+10;
       if(d<m){const o=(m-d)/2*.5,ux=dx/d,uy=dy/d;p.x-=ux*o;p.y-=uy*o;q.x+=ux*o;q.y+=uy*o;p.vx-=ux*.05;p.vy-=uy*.05;q.vx+=ux*.05;q.vy+=uy*.05}}
-    const ks=$('#kside');let kc=null;
-    if(document.body.classList.contains('kiosk')&&ks.offsetWidth)kc=[ks.offsetLeft,ks.offsetTop,ks.offsetLeft+ks.offsetWidth,ks.offsetTop+ks.offsetHeight];
-    if(kc)for(const n of a){const cx=Math.min(Math.max(n.x,kc[0]),kc[2]),cy=Math.min(Math.max(n.y,kc[1]),kc[3]);let dx=n.x-cx,dy=n.y-cy,d=Math.hypot(dx,dy);const m=n.r+10;
+    const obs=[$('#pause'),document.body.classList.contains('kiosk')?$('#kside'):null].filter(o=>o&&o.offsetWidth).map(o=>[o.offsetLeft,o.offsetTop,o.offsetLeft+o.offsetWidth,o.offsetTop+o.offsetHeight]);
+    for(const kc of obs)for(const n of a){const cx=Math.min(Math.max(n.x,kc[0]),kc[2]),cy=Math.min(Math.max(n.y,kc[1]),kc[3]);let dx=n.x-cx,dy=n.y-cy,d=Math.hypot(dx,dy);const m=n.r+10;
       if(d<m){if(d<.01){dx=1;dy=-1;d=1.41}n.x+=dx/d*(m-d)*.6;n.y+=dy/d*(m-d)*.6;n.vx+=dx/d*.1;n.vy+=dy/d*.1}}
-    for(const n of a){n.vx*=.94;n.vy*=.94;n.x+=n.vx;n.y+=n.vy;const pad=n.r+6;
+    const fe=document.activeElement;
+    for(const n of a){n.vx*=paused?.8:.94;n.vy*=paused?.8:.94;if(n.el===fe){n.vx*=.2;n.vy*=.2}n.x+=n.vx;n.y+=n.vy;const pad=n.r+6;
       if(n.x<pad){n.x=pad;n.vx=Math.abs(n.vx)*.5}if(n.x>W-pad){n.x=W-pad;n.vx=-Math.abs(n.vx)*.5}
       if(n.y<pad){n.y=pad;n.vy=Math.abs(n.vy)*.5}if(n.y>H-pad){n.y=H-pad;n.vy=-Math.abs(n.vy)*.5}
       if(Math.abs(n.r-n.dr)>.4){n.dr=n.r;const s=(n.r*2).toFixed(1)+'px';n.el.style.width=s;n.el.style.height=s;n.el.style.setProperty('--r',n.r.toFixed(1))}
@@ -352,7 +390,7 @@ function renderChips(){
 }
 function renderSide(){
   const top=[...D.vis].sort((a,b)=>b.votes-a.votes||b.t-a.t).slice(0,6),mx=Math.max(1,...top.map(i=>i.votes));
-  $('#top').innerHTML=top.length?top.map((i,ix)=>`<li data-k="${i.k}" style="--c:${CM[i.cat].c}"><span class="n">${ix+1}</span><div><div class="tt">${esc(i.title)}</div><div class="bar"><span style="width:${i.votes/mx*100}%"></span></div></div><span class="vv">${i.votes}</span></li>`).join(''):'<li style="cursor:default;display:block">ستظهر هنا الأفكار الأكثر دعمًا.</li>';
+  $('#top').innerHTML=top.length?top.map((i,ix)=>`<li style="--c:${CM[i.cat].c}"><button data-k="${i.k}" aria-haspopup="dialog" aria-label="${ix+1}. ${esc(i.title)}، ${supLabel(i.votes)}"><span class="n" aria-hidden="true">${ix+1}</span><span aria-hidden="true"><span class="tt">${esc(i.title)}</span><span class="bar"><span style="width:${i.votes/mx*100}%"></span></span></span><span class="vv" aria-hidden="true">${i.votes}</span></button></li>`).join(''):'<li style="padding:10px 0">ستظهر هنا الأفكار الأكثر دعمًا.</li>';
   const votes=D.vis.reduce((a,i)=>a+i.votes,0);
   $('#stats').innerHTML=`<div><b>${D.vis.length}</b><span>فكرة</span></div><div><b>${votes}</b><span>تأييد</span></div><div><b>${D.vis.filter(i=>i.status==='done').length}</b><span>منفذة</span></div>`;
 }
@@ -360,7 +398,7 @@ const tags=i=>`<span class="tag" style="--c:${CM[i.cat].c}"><i></i>${CM[i.cat].n
 function renderList(){
   const l=filtered().sort(U.sort==='new'?(a,b)=>b.t-a.t:(a,b)=>b.votes-a.votes||b.t-a.t);
   $('#lcount').textContent=l.length+' فكرة';
-  $('#cards').innerHTML=l.length?l.map(i=>`<button class="card" data-k="${i.k}" style="--c:${CM[i.cat].c}"><div class="meta">${tags(i)}</div><h3>${esc(i.title)}</h3>${i.desc?`<p>${esc(i.desc)}</p>`:''}<div class="meta"><strong>${supLabel(i.votes)}</strong>${i.sup?'<span class="tag st-approved">تؤيدها ✓</span>':''}<span class="muted">${D.notes[i.k].length} إضافة</span></div></button>`).join(''):'<p>لا توجد أفكار مطابقة.</p>';
+  $('#cards').setAttribute('role','list');$('#cards').innerHTML=l.length?l.map(i=>`<article class="card" style="--c:${CM[i.cat].c}"><div class="meta">${tags(i)}</div><h3><button class="open" data-k="${i.k}" aria-haspopup="dialog">${esc(i.title)}</button></h3>${i.desc?`<p>${esc(i.desc)}</p>`:''}<div class="meta"><strong>${supLabel(i.votes)}</strong>${i.sup?'<span class="tag st-approved">تؤيدها ✓</span>':''}<span class="muted">${D.notes[i.k].length} إضافة</span></div></article>`).join(''):'<p>لا توجد أفكار مطابقة.</p>';
 }
 function report(){
   const v=D.vis,d=new Date().toLocaleDateString('ar-OM',{year:'numeric',month:'long',day:'numeric'});
@@ -378,31 +416,48 @@ function renderAdmin(){
   const rows=[...D.all].sort((a,b)=>b.votes-a.votes);
   $('#v-admin').innerHTML=`
   <div class="sec"><h2>روابط المنصة</h2><div class="links">
-   <div><strong>رابط مشاركة الأفكار (للطلبة)</strong><code>${ADD}</code><button class="btn" data-copy="${ADD}">نسخ</button></div>
-   <div><strong>شاشة العرض (للتلفاز أو جهاز العرض)</strong><code>${SHOW}</code><button class="btn" data-copy="${SHOW}">نسخ</button><a class="btn primary" href="#display">فتح</a></div></div></div>
+   <div><strong>رابط مشاركة الأفكار (للطلبة)</strong><code dir="ltr" lang="en">${ADD}</code><button class="btn" data-copy="${ADD}" aria-label="نسخ رابط مشاركة الأفكار">نسخ</button></div>
+   <div><strong>شاشة العرض (للتلفاز أو جهاز العرض)</strong><code dir="ltr" lang="en">${SHOW}</code><button class="btn" data-copy="${SHOW}" aria-label="نسخ رابط شاشة العرض">نسخ</button><a class="btn primary" href="#display">فتح</a></div></div></div>
   <div class="sec"><h2>نظرة عامة</h2><div class="kpis"><div><b>${v.length}</b><span>فكرة معروضة</span></div><div><b>${tot}</b><span>إجمالي التأييدات</span></div><div><b>${participants()}</b><span>طالب مشارك</span></div><div><b>${v.filter(i=>i.status==='review').length}</b><span>قيد الدراسة</span></div></div></div>
   <div class="two">
    <div class="sec"><h2>التأييد حسب المجال</h2>${byCat.map(x=>`<div class="hrow" style="--c:${x.c.c}"><span>${x.c.n}</span><div class="bar"><span style="width:${x.s/mc*100}%"></span></div><span class="num">${x.s} · ${x.n} فكرة</span></div>`).join('')}</div>
    <div class="sec"><h2>الأفكار حسب الحالة</h2>${bySt.map(x=>`<div class="hrow" style="--c:#2f64a0"><span>${x.n}</span><div class="bar"><span style="width:${x.c/ms*100}%"></span></div><span class="num">${x.c}</span></div>`).join('')}</div>
   </div>
   <div class="sec"><div class="listbar"><h2 style="margin:0">التقرير النصي</h2><button class="btn primary" data-a="copy">نسخ التقرير</button></div><pre class="rep" id="rep">${esc(report())}</pre></div>
-  <div class="sec"><h2>إدارة الأفكار ومراجعة المحتوى</h2>${rows.length?`<table class="stack"><thead><tr><th>الفكرة</th><th>المجال</th><th>التأييد</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody>${rows.map(i=>`<tr><td><a href="#" data-k="${i.k}" style="color:inherit;font-weight:700">${esc(i.title)}</a>${i.hidden?' <span class="tag st-merged">مخفية</span>':''}${i.into?` <span class="tag st-merged">مدموجة في: ${esc(D.byK[i.target]?.title||'')}</span>`:''}</td><td>${CM[i.cat].n}</td><td class="num">${i.votes}</td><td><select data-st="${i.k}" aria-label="الحالة">${Object.entries(ST).map(([k,n])=>`<option value="${k}"${i.status===k?' selected':''}>${n}</option>`).join('')}</select></td><td>${i.into?`<button class="btn" data-unmerge="${i.k}">فك الدمج</button>`:`<button class="btn" data-hide="${i.k}">${i.hidden?'إظهار':'إخفاء'}</button>`}</td></tr>`).join('')}</tbody></table>`:'<p class="muted">لا توجد أفكار بعد.</p>'}</div>`;
+  <div class="sec"><h2>إدارة الأفكار ومراجعة المحتوى</h2>${rows.length?`<table class="stack"><caption class="sr">جميع الأفكار مع حالتها وإجراءات الإشراف</caption><thead><tr><th scope="col">الفكرة</th><th scope="col">المجال</th><th scope="col">التأييد</th><th scope="col">الحالة</th><th scope="col">إجراء</th></tr></thead><tbody>${rows.map(i=>`<tr><td><button class="linkbtn" data-k="${i.k}" aria-haspopup="dialog">${esc(i.title)}</button>${i.hidden?' <span class="tag st-merged">مخفية</span>':''}${i.into?` <span class="tag st-merged">مدموجة في: ${esc(D.byK[i.target]?.title||'')}</span>`:''}</td><td>${CM[i.cat].n}</td><td class="num">${i.votes}</td><td><select data-st="${i.k}" aria-label="حالة: ${esc(i.title)}">${Object.entries(ST).map(([k,n])=>`<option value="${k}"${i.status===k?' selected':''}>${n}</option>`).join('')}</select></td><td>${i.into?`<button class="btn" data-unmerge="${i.k}" aria-label="فك دمج: ${esc(i.title)}">فك الدمج</button>`:`<button class="btn" data-hide="${i.k}" aria-label="${i.hidden?'إظهار':'إخفاء'}: ${esc(i.title)}">${i.hidden?'إظهار':'إخفاء'}</button>`}</td></tr>`).join('')}</tbody></table>`:'<p class="muted">لا توجد أفكار بعد.</p>'}</div>`;
 }
 
 /* ---------- sheets ---------- */
-function openSheet(kind,k){U.sheet=kind;U.k=k||null;$('#scrim').hidden=false;$('#sheet').hidden=false;kind==='add'?drawAdd():drawDetail();setTimeout(()=>($('#sheet').querySelector('input:not([type=radio])')||$('#x')).focus({preventScroll:true}),50)}
-function closeSheet(){U.sheet=null;$('#scrim').hidden=true;$('#sheet').hidden=true}
+let opener=null;const BG=()=>[$('.top'),$('.kbar'),$('.tools'),$('#main'),$('#foot'),$('.skip')];
+function openSheet(kind,k){
+  if(!U.sheet)opener=document.activeElement;
+  U.sheet=kind;U.k=k||null;$('#scrim').hidden=false;$('#sheet').hidden=false;document.body.classList.add('locked');
+  BG().forEach(el=>el&&(el.inert=true));
+  kind==='add'?drawAdd():drawDetail();
+  setTimeout(()=>{const f=kind==='add'?$('#aT'):$('#sheetTitle');(f||$('#x')).focus({preventScroll:true})},60);
+}
+function closeSheet(){
+  if(!U.sheet)return;U.sheet=null;$('#scrim').hidden=true;$('#sheet').hidden=true;document.body.classList.remove('locked');
+  BG().forEach(el=>el&&(el.inert=false));
+  const o=opener;opener=null;if(o&&document.contains(o)&&o.offsetParent!==null)o.focus({preventScroll:true});
+}
+$('#sheet').addEventListener('keydown',e=>{
+  if(e.key!=='Tab')return;
+  const f=[...$('#sheet').querySelectorAll('button,input,textarea,select,a[href],[tabindex]:not([tabindex="-1"])')].filter(x=>!x.disabled&&x.offsetParent!==null);
+  if(!f.length)return;const a=f[0],z=f[f.length-1];
+  if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}
+});
 function drawDetail(){
   const i=D.byK[U.k];if(!i)return closeSheet();
   const notes=D.notes[i.k],others=D.vis.filter(x=>x.k!==i.k).map(x=>({x,s:simScore(i.title+' '+i.desc,x.title+' '+x.desc)})).sort((a,b)=>b.s-a.s);
-  $('#sb').innerHTML=`<div class="meta">${tags(i)}</div><h2>${esc(i.title)}</h2>${i.desc?`<p>${esc(i.desc)}</p>`:''}
+  $('#sb').innerHTML=`<div class="meta">${tags(i)}</div><h2 id="sheetTitle" tabindex="-1">${esc(i.title)}</h2>${i.desc?`<p>${esc(i.desc)}</p>`:''}
   <p class="muted">طُرحت ${i.t?ago(i.t):''}${i.mine?' — هذه فكرتك':''}</p>
-  ${i.into?`<p class="muted">دُمجت هذه الفكرة مع «${esc(D.byK[i.target]?.title||'')}».</p>`:`<div class="vote"><strong>${i.votes}</strong><span class="grow">${supLabel(i.votes)}</span><button class="btn primary${i.sup?' on':''}" data-a="sup">${i.sup?'تؤيدها ✓ (إلغاء)':'أؤيد الفكرة'}</button></div>`}
+  ${i.into?`<p class="muted">دُمجت هذه الفكرة مع «${esc(D.byK[i.target]?.title||'')}».</p>`:`<div class="vote"><strong>${i.votes}</strong><span class="grow">${supLabel(i.votes)}</span><button class="btn primary${i.sup?' on':''}" data-a="sup" aria-pressed="${i.sup}">${i.sup?'تؤيدها ✓ (إلغاء)':'أؤيد الفكرة'}</button></div>`}
   ${D.merged[i.k]?`<p class="muted">دُمجت معها ${D.merged[i.k]} فكرة مشابهة مع الاحتفاظ بتأييداتها.</p>`:''}
   <h3>إضافات ومقترحات الطلبة (${notes.length})</h3>
   ${notes.length?`<ul class="notes">${notes.map(n=>`<li>${esc(n.text)}<small>${ago(n.t)}</small></li>`).join('')}</ul>`:'<p class="muted">لا توجد إضافات بعد. طوّر الفكرة بمقترحك.</p>'}
-  <form class="row2" id="fNote"><input class="inp" id="nT" maxlength="200" placeholder="أضف تحسينًا أو مقترحًا مرتبطًا…" aria-label="إضافة مقترح"><button class="btn">إضافة</button></form>
-  ${S.admin?`<div class="adm"><strong>أدوات الإشراف</strong><div class="grid2" style="margin-top:10px">
+  <form class="row2" id="fNote"><label for="nT" class="sr">إضافة مقترح على هذه الفكرة</label><input class="inp" id="nT" maxlength="200" placeholder="أضف تحسينًا أو مقترحًا مرتبطًا…" autocomplete="off"><button class="btn">إضافة</button></form>
+  ${S.admin?`<div class="adm" role="group" aria-label="أدوات الإشراف"><strong>أدوات الإشراف</strong><div class="grid2" style="margin-top:10px">
     <label>الحالة<select class="inp" id="dSt">${Object.entries(ST).map(([k,n])=>`<option value="${k}"${i.status===k?' selected':''}>${n}</option>`).join('')}</select></label>
     <label>دمج مع فكرة مشابهة<select class="inp" id="dMg"><option value="">— اختر —</option>${others.map(o=>`<option value="${o.x.k}">${esc(o.x.title)}${o.s>=.5?' (مشابهة)':''}</option>`).join('')}</select></label></div>
     <div class="act"><button class="btn" data-a="merge">دمج</button><button class="btn danger" data-a="hide">${i.hidden?'إظهار الفكرة':'إخفاء الفكرة (غير ملائمة)'}</button></div></div>`:''}
@@ -410,26 +465,26 @@ function drawDetail(){
 }
 function drawAdd(){
   let dr={};try{dr=JSON.parse(localStorage.getItem('fq-draft')||'{}')}catch(e){}
-  $('#sb').innerHTML=`<h2>أطلق فكرتك</h2><p class="muted">ما الذي تتمنى رؤيته في كلية البريمي الجامعية مستقبلًا؟</p>
-  <form id="fAdd"><label class="f" for="aT">عنوان مختصر للفكرة</label><input class="inp" id="aT" maxlength="50" required placeholder="مثال: مساحات حديثة للدراسة الجماعية" value="${esc(dr.t||'')}"><div class="cnt" id="aC"></div>
+  $('#sb').innerHTML=`<h2 id="sheetTitle" tabindex="-1">أطلق فكرتك</h2><p class="muted" id="addHelp">ما الذي تتمنى رؤيته في كلية البريمي الجامعية مستقبلًا؟</p>
+  <form id="fAdd" novalidate aria-describedby="addHelp"><label class="f" for="aT">عنوان مختصر للفكرة <span aria-hidden="true">*</span><span class="sr">(مطلوب)</span></label><input class="inp" id="aT" maxlength="50" required aria-required="true" aria-describedby="aC aErr" autocomplete="off" enterkeyhint="next" placeholder="مثال: مساحات حديثة للدراسة الجماعية" value="${esc(dr.t||'')}"><div class="cnt" id="aC"></div><p class="err" id="aErr" role="alert" hidden></p>
   <div class="sim" id="sim" hidden></div>
   <label class="f" for="aD">التفاصيل (اختياري)</label><textarea class="inp" id="aD" maxlength="400" placeholder="اشرح فكرتك وكيف ستفيد الطلبة…">${esc(dr.d||'')}</textarea>
-  <label class="f">المجال</label><div class="catpick">${CATS.map((c,ix)=>`<label><input type="radio" name="cat" value="${c.k}"${(dr.c||'study')===c.k?' checked':''}><span class="tag" style="--c:${c.c};background:none;padding:0"><i></i></span>${c.n}</label>`).join('')}</div>
+  <fieldset><legend class="f">المجال</legend><div class="catpick">${CATS.map((c,ix)=>`<label><input type="radio" name="cat" value="${c.k}"${(dr.c||'study')===c.k?' checked':''}><span class="tag" style="--c:${c.c};background:none;padding:0" aria-hidden="true"><i></i></span>${c.n}</label>`).join('')}</div></fieldset>
   <div class="act" style="margin-top:20px"><button class="btn primary" type="submit" style="flex:1">أطلق الفقاعة</button></div></form>`;
   upAdd();
 }
 function upAdd(){
   const t=$('#aT').value,d=$('#aD').value,c=($('#fAdd input[name=cat]:checked')||{}).value;
-  $('#aC').textContent=t.length+' / 50';
+  $('#aC').textContent=t.length+' من 50 حرفًا';if(t.trim().length>=4){$('#aErr').hidden=true;$('#aT').removeAttribute('aria-invalid')}
   try{localStorage.setItem('fq-draft',JSON.stringify({t,d,c}))}catch(e){}
   const sims=t.trim().length<4?[]:D.vis.map(i=>({i,s:simScore(t+' '+d,i.title+' '+i.desc)})).filter(x=>x.s>=.5).sort((a,b)=>b.s-a.s||b.i.votes-a.i.votes).slice(0,3);
   const box=$('#sim');box.hidden=!sims.length;
-  box.innerHTML=sims.length?`<strong>أفكار مشابهة موجودة — يمكنك تأييدها بدل تكرارها:</strong><ul>${sims.map(x=>`<li><span>${esc(x.i.title)} <small>(${x.i.votes})</small></span><span style="display:flex;gap:6px"><button type="button" class="btn" data-view="${x.i.k}">عرض</button>${x.i.sup?'':`<button type="button" class="btn" data-back="${x.i.k}">أؤيدها</button>`}</span></li>`).join('')}</ul>`:'';
+  box.setAttribute('role','status');box.innerHTML=sims.length?`<strong>أفكار مشابهة موجودة — يمكنك تأييدها بدل تكرارها:</strong><ul>${sims.map(x=>`<li><span>${esc(x.i.title)} <small>(${x.i.votes})</small></span><span style="display:flex;gap:6px"><button type="button" class="btn" data-view="${x.i.k}">عرض</button>${x.i.sup?'':`<button type="button" class="btn" data-back="${x.i.k}">أؤيدها</button>`}</span></li>`).join('')}</ul>`:'';
 }
 function submitAdd(e){
   e.preventDefault();if(!canAct())return;
   const title=$('#aT').value.trim(),desc=$('#aD').value.trim(),cat=($('#fAdd input[name=cat]:checked')||{}).value||'other';
-  if(title.length<4)return toast('اكتب عنوانًا أوضح (4 أحرف على الأقل).');
+  if(title.length<4){const er=$('#aErr');er.textContent='اكتب عنوانًا أوضح من 4 أحرف على الأقل.';er.hidden=false;$('#aT').setAttribute('aria-invalid','true');$('#aT').focus();return}
   const mine=S.posts[S.me]?.items||[];if(mine.length>=30)return toast('وصلت إلى الحد الأقصى لعدد الأفكار.');
   const k=newKey();
   write('posts/'+S.me,{items:[...mine,{k,title,desc,cat,t:Date.now()}]}).then(()=>write('supports/'+S.me,{ids:[...(S.supports[S.me]?.ids||[]),k]}));
@@ -448,7 +503,7 @@ function renderKiosk(){
 }
 function drawQR(){
   if(qrDone)return;$('#klink').textContent=ADD.replace('https://','');
-  if(typeof QRCode==='function'){try{new QRCode($('#qr'),{text:ADD,width:512,height:512,colorDark:'#10253d',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});qrDone=true}catch(e){}}
+  if(typeof QRCode==='function'){try{new QRCode($('#qr'),{text:ADD,width:512,height:512,colorDark:'#10253d',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});qrDone=true;$$('#qr img,#qr canvas').forEach(x=>{x.setAttribute('alt','');x.setAttribute('aria-hidden','true')})}catch(e){}}
   if(!qrDone)$('#qr').innerHTML='<span class="klink" style="display:block">'+ADD.replace('https://','')+'</span>';
 }
 function route(){
@@ -467,15 +522,25 @@ function render(){
   if(U.view==='admin')renderAdmin();
   $('#admTab').hidden=!S.admin;
   renderKiosk();
-  if(U.sheet==='detail'&&!$('#sheet').contains(document.activeElement)||U.sheet==='detail'&&document.activeElement===$('#x'))drawDetail();
+  if(U.sheet==='detail'){const ae=document.activeElement,inSheet=$('#sb').contains(ae);
+    if(!(inSheet&&/INPUT|TEXTAREA|SELECT/.test(ae.tagName))){const da=inSheet&&ae.dataset?.a;drawDetail();
+      if(inSheet)((da&&$('#sb [data-a="'+da+'"]'))||$('#sheetTitle')).focus({preventScroll:true})}}
   const b=$('#banner');
   if(S.demo){b.hidden=false;b.innerHTML=`<span>معاينة بأمثلة توضيحية — المشاركات في هذا الوضع لا تُحفظ.</span>${S.live?'<button class="btn" data-a="exitdemo">العودة إلى المنصة</button>':''}`}
   else if(S.slow){b.hidden=false;b.innerHTML='<span>تعذّر الوصول إلى بيانات المنصة حاليًا، قد تكون المعروضة غير محدّثة.</span>'}
   else b.hidden=true;
 }
-function setView(v){if(v==='admin'&&!S.admin)v='bubbles';U.view=v;$$('.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.v===v));
+function setView(v){if(v==='admin'&&!S.admin)v='bubbles';U.view=v;$$('.tabs button').forEach(b=>{const on=b.dataset.v===v;b.setAttribute('aria-selected',on);b.tabIndex=on?0:-1});
   $('#v-bubbles').hidden=v!=='bubbles';$('#v-list').hidden=v!=='list';$('#v-admin').hidden=v!=='admin';$('#chips').style.display=v==='admin'?'none':'';$('.search').style.display=v==='admin'?'none':'';render()}
 $('.tabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b)setView(b.dataset.v)});
+$('.tabs').addEventListener('keydown',e=>{
+  const ts=$$('.tabs button').filter(b=>!b.hidden),i=ts.indexOf(document.activeElement);if(i<0)return;
+  let j=null;if(e.key==='ArrowLeft')j=i+1;if(e.key==='ArrowRight')j=i-1;if(e.key==='Home')j=0;if(e.key==='End')j=ts.length-1;
+  if(j===null)return;e.preventDefault();j=(j+ts.length)%ts.length;ts[j].focus();setView(ts[j].dataset.v);
+});
+function setPaused(p){paused=p;const b=$('#pause');b.setAttribute('aria-pressed',p);b.textContent=p?'تشغيل الحركة':'إيقاف الحركة';try{localStorage.setItem('fq-paused',p?'1':'0')}catch(e){}}
+$('#pause').addEventListener('click',()=>setPaused(!paused));setPaused(paused);
+new IntersectionObserver(es=>{stageVisible=es[0].isIntersecting}).observe(stage);
 $('#q').addEventListener('input',e=>{U.q=e.target.value;render()});
 $('#sort').addEventListener('change',e=>{U.sort=e.target.value;renderList()});
 $('#chips').addEventListener('click',e=>{const b=e.target.closest('.chip');if(b){U.cat=b.dataset.c;render()}});
